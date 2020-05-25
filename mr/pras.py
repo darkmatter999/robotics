@@ -788,6 +788,24 @@ thetalist2 = np.array([0, 0.523599])
 eomg2 = 0.001
 ev2 = 0.0001
 
+#Universal Robots UR5 6R robot arm example
+Blist_UR5 = \
+np.array([[0, 1, 0, 0.191, 0, 0.817],  \
+[0, 0, 1, 0.095, -0.817, 0], \
+[0, 0, 1, 0.095, -0.392, 0], \
+[0, 0, 1, 0.095, 0, 0], \
+[0, -1, 0, -0.082, 0, 0], \
+[0, 0, 1, 0, 0, 0]]).T
+
+M_UR5 = np.array([[-1, 0, 0, 0.817], [0, 0, 1, 0.191], [0, 1, 0, -0.006], [0, 0, 0, 1]])
+T_UR5 = np.array([[0, 1, 0, -0.5], [0, 0, -1, 0.1], [-1, 0, 0, 0.1], [0, 0, 0, 1]])
+#thetalist_UR5 = np.array([-1.725, 5.369, 1.334, -0.163, 1.269, 4.393])
+thetalist_UR5 = np.array([-3.417,  -1,  2, -0.9, -0.1, -1.6])
+eomg_UR5 = 0.001
+ev_UR5 = 0.0001
+
+#UR5 result: [-3.69699552, -1.01704444,  1.72692498, -0.70989542, -0.55538531,-1.57078224]
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def IKinBodyIterates(Blist, M, T, thetalist0, eomg, ev):
@@ -837,7 +855,11 @@ def IKinBodyIterates(Blist, M, T, thetalist0, eomg, ev):
     Output:
         (np.array([1.57073819, 2.999667, 3.14153913]), True)
     """
-    thetalist = np.array(thetalist0).copy()
+    
+    thetalist = np.around(np.array(thetalist0).copy(), decimals=3)
+
+    print ("IK of Universal Robots UR5 6R robot arm with initial joint vector guess:"'\n')
+    print (str(thetalist) + '\n')
 
     #initialize empty array for joint vector matrix
     joint_vector = np.array([])
@@ -849,27 +871,43 @@ def IKinBodyIterates(Blist, M, T, thetalist0, eomg, ev):
     err = np.linalg.norm([Vb[0], Vb[1], Vb[2]]) > eomg \
           or np.linalg.norm([Vb[3], Vb[4], Vb[5]]) > ev
     while err and i < maxiterations:
-        Tsb = FKinBody(M, Blist, thetalist)
-        print ("Iteration " + str(i) + ":")
-        print ("joint vector: " + str(thetalist))
-        print ("SE3(3) end-effector config: " + str(Tsb))
-        print ("Vb: " + str(Vb))
-        print ("angular error magnitude omega_b: " + str(np.linalg.norm([Vb[0], Vb[1], Vb[2]])))
-        print ("linear error magnitude v_b: " + str(np.linalg.norm([Vb[3], Vb[4], Vb[5]])))
+        #calculate Tsb
+        Tsb = np.around(FKinBody(M, Blist, thetalist), decimals=3)
+
+        print ("Iteration " + str(i) + ":"'\n')
+        print ("joint vector: " + '\n' + str(thetalist) + '\n')
+        print ("SE3(3) end-effector config: " + '\n' + str(Tsb) + '\n')
+        print ("Vb: " + '\n' + str(Vb) + '\n')
+        print ("angular error magnitude omega_b: " + '\n' + str(np.around(np.linalg.norm([Vb[0], Vb[1], Vb[2]]), decimals=3)) + '\n')
+        print ("linear error magnitude v_b: " + '\n' + str(np.around(np.linalg.norm([Vb[3], Vb[4], Vb[5]]), decimals=3)) + '\n')
+
         joint_vector = np.append(joint_vector, thetalist)
-        thetalist = thetalist \
+        thetalist = np.around(thetalist \
                     + np.dot(np.linalg.pinv(JacobianBody(Blist, \
-                                                         thetalist)), Vb)
+                                                         thetalist)), Vb), decimals=3)
         i = i + 1
         Vb \
-        = se3ToVec(MatrixLog6(np.dot(TransInv(FKinBody(M, Blist, \
-                                                       thetalist)), T)))
+        = np.around(se3ToVec(MatrixLog6(np.dot(TransInv(FKinBody(M, Blist, \
+                                                       thetalist)), T))), decimals=3)
         err = np.linalg.norm([Vb[0], Vb[1], Vb[2]]) > eomg \
               or np.linalg.norm([Vb[3], Vb[4], Vb[5]]) > ev
-    print (np.reshape(joint_vector, (i, len(thetalist))))
+
+    print ("Result IK:"'\n')
+    print ("joint vector: " + '\n' + str(thetalist) + '\n')
+    print ("SE3(3) end-effector config: " + '\n' + str(Tsb) + '\n')
+    print ("Vb: " + '\n' + str(Vb) + '\n')
+    print ("angular error magnitude omega_b: " + '\n' + str(np.around(np.linalg.norm([Vb[0], Vb[1], Vb[2]]), decimals=3)) + '\n')
+    print ("linear error magnitude v_b: " + '\n' + str(np.around(np.linalg.norm([Vb[3], Vb[4], Vb[5]]), decimals=3)) + '\n')
+    #append the resulting IK to the joint vector matrix
+    joint_vector = np.append(joint_vector, thetalist)
+    #reshape the joint vector list into an (iterations + result x number of joints) matrix
+    joint_vector= np.around(np.reshape(joint_vector, (i+1, len(thetalist))), decimals=3)
+    #save the joint vector matrix to a .csv file
+    np.savetxt("iterates.csv", joint_vector, delimiter=",")
     return (thetalist, not err)
 
-print (IKinBodyIterates(Blist2, M2, T2, thetalist2, eomg2, ev2))
+print(IKinBodyIterates(Blist_UR5, M_UR5, T_UR5, thetalist_UR5, eomg_UR5, ev_UR5))
+#print(IKinBodyIterates(Blist2, M2, T2, thetalist2, eomg2, ev2))
 
 
 
