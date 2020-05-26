@@ -1,3 +1,4 @@
+PS C:\Users\oliver\Documents\robotics\mr> python3.7 pras.py
 IK of Universal Robots UR5 6R robot arm with initial joint vector guess:
 
 [-3.417 -1.     2.    -0.9   -0.1   -1.6  ]

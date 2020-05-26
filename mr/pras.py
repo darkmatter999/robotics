@@ -765,20 +765,6 @@ def IKinBody(Blist, M, T, thetalist0, eomg, ev):
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Blist = np.array([[0, 0, -1, 2, 0,   0],
-                          [0, 0,  0, 0, 1,   0],
-                          [0, 0,  1, 0, 0, 0.1]]).T
-M = np.array([[-1, 0,  0, 0],
-                      [ 0, 1,  0, 6],
-                      [ 0, 0, -1, 2],
-                      [ 0, 0,  0, 1]])
-T = np.array([[0, 1,  0,     -5],
-                      [1, 0,  0,      4],
-                      [0, 0, -1, 1.6858],
-                      [0, 0,  0,      1]])
-thetalist0 = np.array([2.8, 4, 3.7])
-eomg = 0.01
-ev = 0.001
 
 #Book example 6.1 (Page 231)
 Blist2 = np.array([[0, 0, 1, 0, 2, 0], [0, 0, 1, 0, 1, 0]]).T
@@ -799,7 +785,6 @@ np.array([[0, 1, 0, 0.191, 0, 0.817],  \
 
 M_UR5 = np.array([[-1, 0, 0, 0.817], [0, 0, 1, 0.191], [0, 1, 0, -0.006], [0, 0, 0, 1]])
 T_UR5 = np.array([[0, 1, 0, -0.5], [0, 0, -1, 0.1], [-1, 0, 0, 0.1], [0, 0, 0, 1]])
-#thetalist_UR5 = np.array([-1.725, 5.369, 1.334, -0.163, 1.269, 4.393])
 thetalist_UR5 = np.array([-3.417,  -1,  2, -0.9, -0.1, -1.6])
 eomg_UR5 = 0.001
 ev_UR5 = 0.0001
@@ -809,7 +794,10 @@ ev_UR5 = 0.0001
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def IKinBodyIterates(Blist, M, T, thetalist0, eomg, ev):
-    """Computes inverse kinematics in the body frame for an open chain robot
+    """Computes inverse kinematics in the body frame for an open chain robot. 
+    It furthermore outputs the configuration of each Newton-Raphson iteration
+    before the result and the result once the desired end-effector configuration has been found.
+    In addition, a .csv file containing the joint vectors of each Newton-Raphson iteration is created.
 
     :param Blist: The joint screw axes in the end-effector frame when the
                   manipulator is at the home position, in the format of a
@@ -858,10 +846,11 @@ def IKinBodyIterates(Blist, M, T, thetalist0, eomg, ev):
     
     thetalist = np.around(np.array(thetalist0).copy(), decimals=3)
 
+    #output the initial guess of theta angles for each joint
     print ("IK of Universal Robots UR5 6R robot arm with initial joint vector guess:"'\n')
     print (str(thetalist) + '\n')
 
-    #initialize empty array for joint vector matrix
+    #initialize empty array for joint vector matrix to be subsequently output in a .csv file
     joint_vector = np.array([])
     
     i = 0
@@ -870,10 +859,12 @@ def IKinBodyIterates(Blist, M, T, thetalist0, eomg, ev):
                                                       thetalist)), T)))
     err = np.linalg.norm([Vb[0], Vb[1], Vb[2]]) > eomg \
           or np.linalg.norm([Vb[3], Vb[4], Vb[5]]) > ev
+
     while err and i < maxiterations:
-        #calculate Tsb
+        #calculate the current Tsb to be output at each iteration
         Tsb = np.around(FKinBody(M, Blist, thetalist), decimals=3)
 
+        #output the parameters of each current configuration at each iteration
         print ("Iteration " + str(i) + ":"'\n')
         print ("joint vector: " + '\n' + str(thetalist) + '\n')
         print ("SE3(3) end-effector config: " + '\n' + str(Tsb) + '\n')
@@ -881,33 +872,44 @@ def IKinBodyIterates(Blist, M, T, thetalist0, eomg, ev):
         print ("angular error magnitude omega_b: " + '\n' + str(np.around(np.linalg.norm([Vb[0], Vb[1], Vb[2]]), decimals=3)) + '\n')
         print ("linear error magnitude v_b: " + '\n' + str(np.around(np.linalg.norm([Vb[3], Vb[4], Vb[5]]), decimals=3)) + '\n')
 
+        #append the joint vector of the latest iteration to the joint vector matrix
         joint_vector = np.append(joint_vector, thetalist)
+
+        #calculate the new thetalist
         thetalist = np.around(thetalist \
                     + np.dot(np.linalg.pinv(JacobianBody(Blist, \
                                                          thetalist)), Vb), decimals=3)
         i = i + 1
+
+        #update Vb
         Vb \
         = np.around(se3ToVec(MatrixLog6(np.dot(TransInv(FKinBody(M, Blist, \
                                                        thetalist)), T))), decimals=3)
+
+        #check if Vb at the current iteration passes the error test, if so, exit loop
         err = np.linalg.norm([Vb[0], Vb[1], Vb[2]]) > eomg \
               or np.linalg.norm([Vb[3], Vb[4], Vb[5]]) > ev
 
+    #output the resulting inverse kinematics once the loop has finalized and found the result
     print ("Result IK:"'\n')
     print ("joint vector: " + '\n' + str(thetalist) + '\n')
     print ("SE3(3) end-effector config: " + '\n' + str(Tsb) + '\n')
     print ("Vb: " + '\n' + str(Vb) + '\n')
     print ("angular error magnitude omega_b: " + '\n' + str(np.around(np.linalg.norm([Vb[0], Vb[1], Vb[2]]), decimals=3)) + '\n')
     print ("linear error magnitude v_b: " + '\n' + str(np.around(np.linalg.norm([Vb[3], Vb[4], Vb[5]]), decimals=3)) + '\n')
+
     #append the resulting IK to the joint vector matrix
     joint_vector = np.append(joint_vector, thetalist)
+
     #reshape the joint vector list into an (iterations + result x number of joints) matrix
     joint_vector= np.around(np.reshape(joint_vector, (i+1, len(thetalist))), decimals=3)
+
     #save the joint vector matrix to a .csv file
     np.savetxt("iterates.csv", joint_vector, delimiter=",")
-    return (thetalist, not err)
 
-print(IKinBodyIterates(Blist_UR5, M_UR5, T_UR5, thetalist_UR5, eomg_UR5, ev_UR5))
-#print(IKinBodyIterates(Blist2, M2, T2, thetalist2, eomg2, ev2))
+#call IKinBodyIterates with the Universal Robots UR5 parameters given above
+IKinBodyIterates(Blist_UR5, M_UR5, T_UR5, thetalist_UR5, eomg_UR5, ev_UR5)
+
 
 
 
