@@ -1,0 +1,104 @@
+PS C:\Users\oliver\Documents\robotics\mr> python3.7 pras.py
+IK of Universal Robots UR5 6R robot arm with initial joint vector guess:
+
+[-3.417 -1.     2.    -0.9   -0.1   -1.6  ]
+
+Iteration 0:
+
+joint vector:
+[-3.417 -1.     2.    -0.9   -0.1   -1.6  ]
+
+SE3(3) end-effector config:
+[[ 0.067  0.982 -0.175 -0.46 ]
+ [-0.022 -0.174 -0.985 -0.068]
+ [-0.997  0.07   0.01   0.023]
+ [ 0.     0.     0.     1.   ]]
+
+Vb:
+[-0.17547931  0.01611994 -0.06924147 -0.07982015 -0.05228186 -0.16363965]
+
+angular error magnitude omega_b:
+0.189
+
+linear error magnitude v_b:
+0.189
+
+Iteration 1:
+
+joint vector:
+[-3.779 -1.182  2.001 -1.292 -0.635 -1.095]
+
+SE3(3) end-effector config:
+[[ 0.1    0.993 -0.055 -0.449]
+ [ 0.264 -0.08  -0.961  0.115]
+ [-0.959  0.082 -0.27   0.089]
+ [ 0.     0.     0.     1.   ]]
+
+Vb:
+[-0.068 -0.271 -0.092 -0.015 -0.05   0.015]
+
+angular error magnitude omega_b:
+0.294
+
+linear error magnitude v_b:
+0.054
+
+Iteration 2:
+
+joint vector:
+[-3.696 -1.039  1.764 -0.791 -0.497 -1.492]
+
+SE3(3) end-effector config:
+[[ 0.023  0.998 -0.058 -0.5  ]
+ [ 0.03  -0.059 -0.998  0.097]
+ [-0.999  0.021 -0.031  0.098]
+ [ 0.     0.     0.     1.   ]]
+
+Vb:
+[-0.059 -0.031 -0.022 -0.002  0.    -0.003]
+
+angular error magnitude omega_b:
+0.07
+
+linear error magnitude v_b:
+0.004
+
+Iteration 3:
+
+joint vector:
+[-3.697 -1.016  1.725 -0.7   -0.554 -1.58 ]
+
+SE3(3) end-effector config:
+[[-0.002  1.    -0.001 -0.5  ]
+ [-0.005 -0.001 -1.     0.1  ]
+ [-1.    -0.002  0.005  0.1  ]
+ [ 0.     0.     0.     1.   ]]
+
+Vb:
+[-0.001  0.005  0.002  0.    -0.    -0.   ]
+
+angular error magnitude omega_b:
+0.005
+
+linear error magnitude v_b:
+0.0
+
+Result IK:
+
+joint vector:
+[-3.697 -1.018  1.727 -0.71  -0.555 -1.57 ]
+
+SE3(3) end-effector config:
+[[-0.002  1.    -0.001 -0.5  ]
+ [-0.005 -0.001 -1.     0.1  ]
+ [-1.    -0.002  0.005  0.1  ]
+ [ 0.     0.     0.     1.   ]]
+
+Vb:
+[-0.    -0.001  0.     0.     0.    -0.   ]
+
+angular error magnitude omega_b:
+0.001
+
+linear error magnitude v_b:
+0.0

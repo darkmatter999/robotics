@@ -9,7 +9,7 @@ The goal is to find the jacobian Js of the end-effector frame
 given a particular set of joint coordinates **theta**, i.e. the twist of the end-effector frame 
 given a certain configuration of the robot joints.
 Unlike the forward kinematics, the screw axes input parameters here depend on their respective **theta** (i.e. are a function 
-of **theta**), while in FK all joint angles are set to zero.
+of **theta**), while in FK all joint angles are set to zero ('home position').
 '''
 
 set_S_orig=np.array([[0,0,1,0,0,0],[0,0,1,0,-1,0],[0,0,1,0,-2,0]])
