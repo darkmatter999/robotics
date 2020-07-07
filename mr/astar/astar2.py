@@ -43,7 +43,8 @@ def astar(nodes, edges):
                 if list(parent.keys())[i] == path[-1]:
                     path.append(parent[path[-1]])
                 i=i-1
-            return list(reversed(path))
+            #return list(reversed(path))
+            return parent
 
         else:
             neighbors = edges[edges[:,1]==current]

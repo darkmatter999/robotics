@@ -18,7 +18,7 @@ def astar(nodes, edges):
     #load the .csv input parameter files 'nodes' and 'edges' and convert to Numpy arrays
     nodes = np.loadtxt(nodes, delimiter=',')
     edges = np.loadtxt(edges, delimiter=',')
-
+    
     #initialize the list of nodes to be explored with the start node
     open_list = np.array([nodes[0][0]])
     #initialize the cost so far accrued for a given node with the cost from the start node to the start node, which is 0
@@ -54,10 +54,11 @@ def astar(nodes, edges):
             while i > 0:
                 if list(parent.keys())[i] == path[-1]:
                     path = np.append(path, int(parent[path[-1]]))
+                    #print (path)
                 i=i-1
             path = np.flip(path)
             path = np.reshape(path, (1,len(path)))
-            path = np.savetxt('path.csv', path, fmt="%d", delimiter=',')
+            path = np.savetxt('results/path.csv', path, fmt="%d", delimiter=',')
             return (print('Success! Path saved to "path.csv"'), path)
            
         else:
@@ -87,7 +88,7 @@ def astar(nodes, edges):
     return (print('Failure: No available path'))
 
 #call the function with the two required input parameters 'nodes' and 'edges'
-astar("nodes.csv", "edges.csv")
+astar("results/nodes.csv", "results/edges.csv")
 
 
     
