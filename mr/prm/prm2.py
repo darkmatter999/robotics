@@ -1,7 +1,8 @@
 import numpy as np
 
 #these functions need to be redesigned
-def collision_check(x1, y1, x2, y2, cx, cy, r):
+def collision_check(x1, y1, x2, y2, cx, cy, d):
+    r = d/2
     inside1 = pointCircle(x1,y1, cx,cy,r)
     inside2 = pointCircle(x2,y2, cx,cy,r)
     if inside1 or inside2:
@@ -24,16 +25,17 @@ def collision_check(x1, y1, x2, y2, cx, cy, r):
     distY = closestY - cy
     distance = np.sqrt((distX*distX) + (distY*distY))
 
-    if distance <= r/2:
+    if distance <= r + r*0.2:
         return True
     return False
 
-def pointCircle(px, py, cx, cy, r):
+def pointCircle(px, py, cx, cy, d):
+    r = d/2
     distX = px - cx
     distY = py - cy
     distance = np.sqrt((distX*distX) + (distY*distY))
     
-    if distance <= r/2:
+    if distance <= r + r*0.2:
         return True
     return False
 
@@ -42,7 +44,7 @@ def linePoint(x1, y1, x2, y2, px, py):
     d2 = np.sqrt((px-x2)**2 + (py-y2)**2)
     lineLen = np.sqrt((x2-x1)**2 + (y2-y1)**2)
 
-    buffer = 0.4
+    buffer = 0.3
 
     if d1+d2 >= lineLen-buffer and d1+d2 <=lineLen+buffer:
         return True
@@ -69,12 +71,12 @@ start_y = -0.5
 goal_x = 0.5
 goal_y = 0.5
 
-k_nn = 7
+k_nn = 8
 
 nodes = np.array([[1,-0.5,-0.5,np.sqrt((goal_x-start_x)**2 + (goal_y-start_y)**2)]])
 
-sample_x = np.random.uniform(start_distr, end_distr, 28)
-sample_y = np.random.uniform(start_distr, end_distr, 28)
+sample_x = np.random.uniform(start_distr, end_distr, 23)
+sample_y = np.random.uniform(start_distr, end_distr, 23)
 
 for i in range(len(sample_x)):
     nodes = np.concatenate((nodes, np.array([[i+2, sample_x[i], sample_y[i], np.sqrt((goal_x-sample_x[i])**2 + (goal_y-sample_y[i])**2)]])), axis=0)

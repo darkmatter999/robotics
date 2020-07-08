@@ -1,5 +1,5 @@
 '''
-***A* ALGORITHM IMPLEMENTED IN PYTHON***
+***A* SEARCH ALGORITHM IMPLEMENTED IN PYTHON***
 
 This function implements the A* search algorithm in Python. It finds the cheapest path from a given start node to a given end node in
 a weighted graph. The given parameters are an array of nodes, with the numbered node and the heuristic cost (e.g. direct line from that
@@ -10,7 +10,7 @@ The algorithm returns the cheapest path found from the start node to the goal no
 at the highest-numbered node.
 
 '''
-
+import sys
 import numpy as np
 
 def astar(nodes, edges):
@@ -87,8 +87,11 @@ def astar(nodes, edges):
     #return 'failure' if there is no available path from the start node to the goal node
     return (print('Failure: No available path'))
 
-#call the function with the two required input parameters 'nodes' and 'edges'
-astar("results/nodes.csv", "results/edges.csv")
+#call astar directly from command line without having to implement parameter changes in the script itself
+if __name__ == "__main__":
+    nodes = str(sys.argv[1])
+    edges = str(sys.argv[2])
+    astar(nodes, edges)
 
 
     
