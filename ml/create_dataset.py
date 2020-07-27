@@ -139,18 +139,20 @@ model.fit(train_dataset, epochs=10)
 
 train_dataset_IDG = ImageDataGenerator(rescale=1/255,
       #addition of various augmentation features
-      rotation_range=40,
-      width_shift_range=0.2,
-      height_shift_range=0.2,
-      shear_range=0.2,
-      zoom_range=0.2,
-      horizontal_flip=True,
-      fill_mode='nearest')
+      #rotation_range=40,
+      #width_shift_range=0.2,
+      #height_shift_range=0.2,
+      #shear_range=0.2,
+      #zoom_range=0.2,
+      #horizontal_flip=True,
+      #fill_mode='nearest'
+)
 #loading the fork_or_spoon pet dataset
 #train_IDG = train_dataset_IDG.flow_from_directory('img/fork_or_spoon/', target_size=(60, 60), batch_size=64, class_mode='binary')
 #loading the horse_or_human dataset from Laurence Moroney
-train_IDG = train_dataset_IDG.flow_from_directory('img/horse_or_human/', target_size=(120, 120), batch_size=64, class_mode='binary')
-model.fit(train_IDG, steps_per_epoch=8, epochs=15, verbose=1)
+train_IDG = train_dataset_IDG.flow_from_directory('img/horse_or_human_2/horse_or_human_2', target_size=(120, 120), batch_size=64, class_mode='binary')
+#train_IDG = train_dataset_IDG.flow_from_directory('img/horse_or_human', target_size=(100, 100), batch_size=64, class_mode='binary')
+model.fit(train_IDG, steps_per_epoch=8, epochs=40, verbose=1)
 
 #this is a handy way to display a complete overview of the above defined (sequential) model
 #print (model.summary())
