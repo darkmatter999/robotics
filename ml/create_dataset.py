@@ -35,14 +35,14 @@ def get_imagelist(path):
     return [os.path.join(path,f) for f in os.listdir(path)]
 
 #use the 'img/spoons' folder as path parameter and save the file path list as 'img_list'
-img_list = get_imagelist('img/spoons')
+img_list = get_imagelist('img/horse_or_human_2/horse_or_human_2_train/humans')
 
 #print the contents of img_list
 #print (img_list)
 
 #define the uniform width and height of each sample
-width = 60
-height = 60
+width = 120
+height = 120
 
 #create an empty Numpy array as a container for all images
 #img_array = np.array([np.zeros((60,60,3))])

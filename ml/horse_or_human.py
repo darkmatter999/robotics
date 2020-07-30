@@ -26,27 +26,39 @@ from tensorflow.keras.regularizers import l2
 model = tf.keras.Sequential([
     #first, one convolution layer and one max pooling layer are defined. The input shape of (60, 60, 3) is defined as 'target size' in below
     #ImageDataGenerator or in above 'manual' example
-    tf.keras.layers.Conv2D(16, (3,3), activation='relu', input_shape=(120, 120, 3)),
+    #if a cropping layer is prepended, 'padding=same' must be activated for the convolutions!
+    #The cropping layer is an experimental setup which assumes that most of the 'objects of interest' (horses, humans) are placed rather in the
+    #center of the image. Hence, cutting out the margins may lead to a learning concentration of features in the faces and bodies of the horses
+    #and humans, and not so much on the backgrounds (grass, beach, mountain, city, etc.)
+    #tf.keras.layers.Cropping2D(cropping=((15, 15), (30, 30)), input_shape=(120, 120, 3)),
+    tf.keras.layers.Conv2D(16, (3,3), activation='relu', padding='same', input_shape=(120, 120, 3)),
     tf.keras.layers.MaxPooling2D(2, 2),
     #adding another conv + pooling layer
-    tf.keras.layers.Conv2D(32, (3,3), activation='relu'),
+    tf.keras.layers.Conv2D(32, (3,3), activation='relu', padding='same'),
     tf.keras.layers.MaxPooling2D(2,2),
     #adding yet another (the third) conv + pooling layer
-    tf.keras.layers.Conv2D(32, (3,3), activation='relu'),
-    tf.keras.layers.MaxPooling2D(2,2),
+    tf.keras.layers.Conv2D(32, (3,3), activation='relu', padding='same'),
+    #tf.keras.layers.MaxPooling2D(2,2),
+    #adding a Dropout layer
+    tf.keras.layers.Dropout(0.25),
     #adding yet another (the fourth) conv + pooling layer
-    tf.keras.layers.Conv2D(32, (3,3), activation='relu'),
+    tf.keras.layers.Conv2D(32, (3,3), activation='relu', padding='same'),
     tf.keras.layers.MaxPooling2D(2,2),
     #adding yet another (the fifth) conv + pooling layer
-    #tf.keras.layers.Conv2D(32, (3,3), activation='relu'),
-    #tf.keras.layers.MaxPooling2D(2,2),
+    tf.keras.layers.Conv2D(32, (3,3), activation='relu', padding='same'),
+    tf.keras.layers.MaxPooling2D(2,2),
+    tf.keras.layers.Conv2D(32, (3,3), activation='relu', padding='same'),
+    tf.keras.layers.Conv2D(32, (3,3), activation='relu', padding='same'),
     #the flatten layer learns no parameters, it just flattens image array to a single number. 
     tf.keras.layers.Flatten(),
     #one dense layer is added
-    tf.keras.layers.Dense(512, activation='relu', kernel_regularizer=l2(0.001)),
+    tf.keras.layers.Dense(512, activation='relu'),
+    tf.keras.layers.Dense(128, activation='relu'),
     # in this pet problem, the output is either 0 or 1, hence binary
     tf.keras.layers.Dense(1, activation='sigmoid')
 ])
+
+model.summary()
 
 model.compile(optimizer=tf.keras.optimizers.RMSprop(),
               loss='binary_crossentropy',
@@ -55,23 +67,25 @@ model.compile(optimizer=tf.keras.optimizers.RMSprop(),
 #instantiating training and validation with Keras ImageDataGenerator. Augmentation may or may not be enabled.
 train_dataset_IDG = ImageDataGenerator(rescale=1/255,
       #addition of various augmentation features
-      #rotation_range=40,
-      #width_shift_range=0.2,
-      #height_shift_range=0.2,
-      #shear_range=0.2,
-      #zoom_range=0.2,
-      #horizontal_flip=True,
-      #fill_mode='nearest'
+      rotation_range=40,
+      width_shift_range=0.2,
+      height_shift_range=0.2,
+      shear_range=0.2,
+      zoom_range=0.2,
+      horizontal_flip=True,
+      fill_mode='nearest'
 )
 
 val_dataset_IDG = ImageDataGenerator(rescale=1/255)
 
 #load training and validation data
-train_IDG = train_dataset_IDG.flow_from_directory('img/horse_or_human_2/horse_or_human_2_train', target_size=(120, 120), batch_size=64, class_mode='binary')
-val_IDG = val_dataset_IDG.flow_from_directory('img/horse_or_human_2/horse_or_human_2_val', target_size=(120, 120), batch_size=8, class_mode='binary')
+#train_IDG = train_dataset_IDG.flow_from_directory('img/horse_or_human_2/horse_or_human_2_train', target_size=(120, 120), batch_size=64, class_mode='binary')
+train_IDG = train_dataset_IDG.flow_from_directory('img/horse_or_human_reduced/horse_or_human_reduced_train', target_size=(120, 120), batch_size=64, class_mode='binary')
+#val_IDG = val_dataset_IDG.flow_from_directory('img/horse_or_human_2/horse_or_human_2_val', target_size=(120, 120), batch_size=8, class_mode='binary')
+val_IDG = val_dataset_IDG.flow_from_directory('img/horse_or_human_reduced/horse_or_human_reduced_val', target_size=(120, 120), batch_size=8, class_mode='binary')
 
 #fit the model
-history = model.fit(train_IDG, steps_per_epoch=8, epochs=120, verbose=1, validation_data = val_IDG, validation_steps=8)
+history = model.fit(train_IDG, steps_per_epoch=8, epochs=80, verbose=1, validation_data = val_IDG, validation_steps=8)
 
 #-----------------------------------------------------------
 # Retrieve a list of list results on training and test data
