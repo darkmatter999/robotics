@@ -1,0 +1,366 @@
+FUNCTION: 2x^2 + 3x
+INTERVAL: (-2, -2+h), where h != 0
+
+we need to find a function f(h), which is a line. It represents the average rate of change of above function 2x^2 + 3x at the interval (-2, -2+h).
+This function f(h) is of the form y=mx+b, the general slope formula.
+
+evaluation at x=-2: f(x) = 2
+if h=3, then x = -2+h, i.e. -2+3 = 1 -->
+evaluation at x=1: f(x) = 5
+
+now we evaluate the slope of the interval (-2, 1) -->
+
+(dy / dx)
+5-2
+---
+1-(-2)
+
+=
+
+3/3 = 1
+
+Therefore, f(h) at h=3 is 1.
+
+Now we need a second point of the function f(h)
+
+We set h to 1 -->
+evaluation at x=-2: f(x) = 2
+if h=1, then x = -2+h, i.e. -2+1 = -1 -->
+evaluation at x=-1: f(x) = -1
+
+now we evaluate the slope of the interval (-2, -1) -->
+
+(dy / dx)
+-1-2
+----
+-1-(-2)
+
+=
+
+-3/1 = -3
+
+Therefore, f(h) at h=1 is -3
+
+Now, with the following coordinates of f(h): (3,1), (1, -3), we can evaluate the slope of f(h), i.e. the 'm' in y = mx+b -->
+dy / dx --> (-3-1) / (1-3) = -4/-2 = 2. Therefore, m = 2.
+
+We now need to find the intercept term b to complete the formula y=mx+b. So substituting one of the two arbitrary h's (we take h=3) yields
+
+1 = 2*3 + b --> 1=6+b --> -5 = b. Therefore b = -5, and the average rate of change of 2x^2 + 3x at the interval (-2, -2+h) is y = 2h - 5.
+
+-------------------------------------------------------------
+
+FUNCTION: 3x^2 - 2x
+INTERVAL: (-3, h) where h != -3
+
+we need to find a function f(h), which is a line. It represents the average rate of change of above function at above interval.
+This function f(h) is of the form y=mx+b, the general slope formula.
+
+evaluation at x=-3: f(x) = 33
+if h=2, then x = h, i.e. 2 = 2 -->
+evaluation at x=2: f(x) = 8
+
+now we evaluate the slope of the interval (-3, 2) -->
+
+(dy / dx)
+8-33
+---
+2-(-3)
+
+=
+
+-25/5 = -5
+
+Therefore, f(h) at h=2 is -5.
+
+Now we need a second point of the function f(h)
+
+We set h to 4 -->
+evaluation at x=-3: f(x) = 33
+if h=4, then x = h, i.e. 4 = 4 -->
+evaluation at x=4: f(x) = 40
+
+now we evaluate the slope of the interval (-3, 4) -->
+
+(dy / dx)
+40-33
+----
+4-(-3)
+
+=
+
+7/7 = 1
+
+Therefore, f(h) at h=4 is 1
+
+Now, with the following coordinates of f(h): (2,-5), (4, 1), we can evaluate the slope of f(h), i.e. the 'm' in y = mx+b -->
+dy / dx --> (1+5) / (4-2) = 6/2 = 3. Therefore, m = 3.
+
+We now need to find the intercept term b to complete the formula y=mx+b. So substituting one of the two arbitrary h's (we take h=4) yields
+
+1 = 3*4 + b --> 1=12+b --> -11 = b. Therefore b = -11, and the average rate of change is y = 3h - 11.
+
+-----------------------------------------------------------
+
+FUNCTION: x^2 + 5x
+INTERVAL: (2, 2+h) where h != 0
+
+we need to find a function f(h), which is a line. It represents the average rate of change of above function at above interval.
+This function f(h) is of the form y=mx+b, the general slope formula.
+
+evaluation at x=2: f(x) = 14
+if h=1, then x = 2+h, i.e. 2+1 = 3 -->
+evaluation at x=3: f(x) = 24
+
+now we evaluate the slope of the interval (2, 3) -->
+
+(dy / dx)
+24-14
+---
+3-2
+
+=
+
+10/1 = 10
+
+Therefore, f(h) at h=1 is 10.
+
+Now we need a second point of the function f(h)
+
+We set h to 8 -->
+evaluation at x=2: f(x) = 14
+if h=8, then x = 2+h, i.e. 2+8 = 10 -->
+evaluation at x=10: f(x) = 150
+
+now we evaluate the slope of the interval (2, 10) -->
+
+(dy / dx)
+150-14
+----
+10-2
+
+=
+
+136/8 = 17
+
+Therefore, f(h) at h=8 is 17
+
+Now, with the following coordinates of f(h): (1,10), (8, 17), we can evaluate the slope of f(h), i.e. the 'm' in y = mx+b -->
+dy / dx --> (17-10) / (8-1) = 7/7 = 1. Therefore, m = 1.
+
+We now need to find the intercept term b to complete the formula y=mx+b. So substituting one of the two arbitrary h's (we take h=8) yields
+
+17 = 1*8 + b --> 17=8+b --> 9 = b. Therefore b = 9, and the average rate of change is y = h + 9.
+
+------------------------------------------------------
+
+FUNCTION: x^2 + 5x - 4
+INTERVAL: (-2, h) where h != -2
+
+we need to find a function f(h), which is a line. It represents the average rate of change of above function at above interval.
+This function f(h) is of the form y=mx+b, the general slope formula.
+
+evaluation at x=-2: f(x) = -10
+if h=5, then x = h, i.e. 5 = 5 -->
+evaluation at x=5: f(x) = 46
+
+now we evaluate the slope of the interval (-2, 5) -->
+
+(dy / dx)
+46-(-10)
+---
+5-(-2)
+
+=
+
+56/7 = 8
+
+Therefore, f(h) at h=5 is 8.
+
+Now we need a second point of the function f(h)
+
+We set h to 2 -->
+evaluation at x=-2: f(x) = -10
+if h=2, then x = h, i.e. 2 = 2 -->
+evaluation at x=2: f(x) = 10
+
+now we evaluate the slope of the interval (-2, 2) -->
+
+(dy / dx)
+10-(-10)
+----
+2-(-2)
+
+=
+
+20/4 = 5
+
+Therefore, f(h) at h=2 is 5
+
+Now, with the following coordinates of f(h): (5,8), (2, 5), we can evaluate the slope of f(h), i.e. the 'm' in y = mx+b -->
+dy / dx --> (5-8) / (2-5) = -3/-3 = 1. Therefore, m = 1.
+
+We now need to find the intercept term b to complete the formula y=mx+b. So substituting one of the two arbitrary h's (we take h=5) yields
+
+8 = 1*5 + b --> 8=5+b --> 3 = b. Therefore b = 3, and the average rate of change is y = h + 3.
+
+
+------------------------------------------------------
+
+FUNCTION: -3x^2 + 1
+INTERVAL: (3, 3+h) where h != 0
+
+we need to find a function f(h), which is a line. It represents the average rate of change of above function at above interval.
+This function f(h) is of the form y=mx+b, the general slope formula.
+
+evaluation at x=3: f(x) = -26
+if h=6, then x = 3+h, i.e. 3+6 = 9 -->
+evaluation at x=9: f(x) = -242
+
+now we evaluate the slope of the interval (3, 9) -->
+
+(dy / dx)
+-242-(-26)
+---
+9-3
+
+=
+
+-216/6 = -36
+
+Therefore, f(h) at h=6 is -36.
+
+Now we need a second point of the function f(h)
+
+We set h to 1 -->
+evaluation at x=3: f(x) = -26
+if h=1, then x = 3+h, i.e. 3+1 = 4 -->
+evaluation at x=4: f(x) = -47
+
+now we evaluate the slope of the interval (3, 4) -->
+
+(dy / dx)
+-47-(-26)
+----
+4-3
+
+=
+
+-21/1 = -21
+
+Therefore, f(h) at h=1 is -21
+
+Now, with the following coordinates of f(h): (6,-36), (1, -21), we can evaluate the slope of f(h), i.e. the 'm' in y = mx+b -->
+dy / dx --> (-21+36) / (1-6) = 15/-5 = -3. Therefore, m = -3.
+
+We now need to find the intercept term b to complete the formula y=mx+b. So substituting one of the two arbitrary h's (we take h=1) yields
+
+-21 = -3*1 + b --> -21=-3+b --> -18 = b. Therefore b = -18, and the average rate of change is y = -3h -18.
+
+------------------------------------------------------
+
+FUNCTION: 4x^2 + 3
+INTERVAL: (1, h) where h != 1
+
+we need to find a function f(h), which is a line. It represents the average rate of change of above function at above interval.
+This function f(h) is of the form y=mx+b, the general slope formula.
+
+evaluation at x=1: f(x) = 7
+if h=3, then x = h, i.e. 3 = 3 -->
+evaluation at x=3: f(x) = 39
+
+now we evaluate the slope of the interval (1, 3) -->
+
+(dy / dx)
+39-7
+---
+3-1
+
+=
+
+32/2 = 16
+
+Therefore, f(h) at h=3 is 16.
+
+Now we need a second point of the function f(h)
+
+We set h to 2 -->
+evaluation at x=1: f(x) = 7
+if h=2, then x = h, i.e. 2 = 2 -->
+evaluation at x=2: f(x) = 19
+
+now we evaluate the slope of the interval (1, 2) -->
+
+(dy / dx)
+19-7
+----
+2-1
+
+=
+
+12/1 = 12
+
+Therefore, f(h) at h=2 is 12
+
+Now, with the following coordinates of f(h): (3,16), (2,12), we can evaluate the slope of f(h), i.e. the 'm' in y = mx+b -->
+dy / dx --> (12-16) / (2-3) = -4/-1 = 4. Therefore, m = 4.
+
+We now need to find the intercept term b to complete the formula y=mx+b. So substituting one of the two arbitrary h's (we take h=2) yields
+
+12 = 4*2 + b --> 12=8+b --> 4 = b. Therefore b = 4, and the average rate of change is y = 4h + 4.
+
+------------------------------------------------------
+
+FUNCTION: 4x^2 - 5
+INTERVAL: (-4, -4+h) where h != 0
+
+we need to find a function f(h), which is a line. It represents the average rate of change of above function at above interval.
+This function f(h) is of the form y=mx+b, the general slope formula.
+
+evaluation at x=-4: f(x) = 59
+if h=1, then x = -4+h, i.e. -4+1 = -3 -->
+evaluation at x=-3: f(x) = 31
+
+now we evaluate the slope of the interval (-4, -3) -->
+
+(dy / dx)
+31-59
+---
+-3-(-4)
+
+=
+
+-28/1 = -28
+
+Therefore, f(h) at h=1 is -28.
+
+Now we need a second point of the function f(h)
+
+We set h to 3 -->
+evaluation at x=-4: f(x) = 59
+if h=3, then x = -4+h, i.e. -4+3 = -1 -->
+evaluation at x=-1: f(x) = -1
+
+now we evaluate the slope of the interval (-4, -1) -->
+
+(dy / dx)
+-1-59
+----
+-1-(-4)
+
+=
+
+-60/3 = -20
+
+Therefore, f(h) at h=3 is -20
+
+Now, with the following coordinates of f(h): (1,-28), (3,-20), we can evaluate the slope of f(h), i.e. the 'm' in y = mx+b -->
+dy / dx --> (-20+28) / (3-1) = 8/2 = 4. Therefore, m = 4.
+
+We now need to find the intercept term b to complete the formula y=mx+b. So substituting one of the two arbitrary h's (we take h=3) yields
+
+-20 = 4*3 + b --> -20=12+b --> -32 = b. Therefore b = -32, and the average rate of change is y = 4h - 32.
+
+
+
+

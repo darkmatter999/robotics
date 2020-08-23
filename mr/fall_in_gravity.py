@@ -1485,10 +1485,10 @@ def InverseDynamicsTrajectory(thetamat, dthetamat, ddthetamat, g, \
     return taumat
 
 def FallInGravity(thetalist, g, Mlist, Glist, Slist, tf, steps, filename):
-    """Simulates the UR5 serial chain robot falling in gravity with zero velocities and torques
-    Required parameters. The return value is a .csv table of the joint angles recorded at each step
-    of the simulation
-    -------------------
+    """Simulates the UR5 serial chain robot falling in gravity with zero velocities and torques. 
+    The return value is a .csv table of the joint angles recorded at each step of the simulation.
+    ---------------------------------------------------------------------------------------------
+    Required parameters:
     :param thetalist: n-vector of initial joint variables
     :param g: Gravity vector g
     :param Mlist: List of link frames {i} relative to {i-1} at the home
