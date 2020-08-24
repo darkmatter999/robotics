@@ -1,5 +1,5 @@
 #This program evaluates the average rate of change of a function at an arbitrary interval.
-#It takes a function of the form '[int1]x^2+[int2]x+[int3]' (e.g. 5x^2-4x+3) as input
+#It takes a parabolic function of the form '[int1]x^2+[int2]x+[int3]' (e.g. 5x^2-4x+3) as input
 #Further inputs are the start point of the interval, the stop point and two arbitrarily chosen real numbers as points
 #Below is an example of how the algorithm works:
 
@@ -56,7 +56,7 @@ We now need to find the intercept term b to complete the formula y=mx+b. So subs
 
 '''
 
-def big_intervals(int1, int2, int3, start_interval, stop_interval, arbitrary_pt1, arbitrary_pt2):
+def rate_of_change_with_intervals(int1, int2, int3, start_interval, stop_interval, arbitrary_pt1, arbitrary_pt2):
     x_arbitrary_pt1 = stop_interval+arbitrary_pt1
     x_arbitrary_pt2 = stop_interval+arbitrary_pt2
     #evaluation for the start point of the interval
@@ -64,6 +64,10 @@ def big_intervals(int1, int2, int3, start_interval, stop_interval, arbitrary_pt1
     #evaluations for first arbitrary point
     eval_arbitrary_pt1 = (int1*x_arbitrary_pt1**2) + (int2*x_arbitrary_pt1) + int3
     slope1 = (eval_arbitrary_pt1 - eval_start_interval) / (x_arbitrary_pt1 - start_interval)
+    #if x at the arbitrary_pt1 is set very close to x (i.e. the start interval) then the slope1 represents 
+    #a value very close to the derivative of f at start interval. This means that at 'extremely close' intervals the average rate
+    #of change effectively equals the instantaneous rate of change. 
+    print (slope1)
     #evaluations for second arbitrary point
     eval_arbitrary_pt2 = (int1*x_arbitrary_pt2**2) + (int2*x_arbitrary_pt2) + int3
     slope2 = (eval_arbitrary_pt2 - eval_start_interval) / (x_arbitrary_pt2 - start_interval)
@@ -76,5 +80,37 @@ def big_intervals(int1, int2, int3, start_interval, stop_interval, arbitrary_pt1
     print ("The average rate of change ( the function f(h) ) is: " + str(m) + "h" + "+" + str(b))
 
 
-big_intervals(3,1,0,-3,-3,17,87)
+#rate_of_change_with_intervals(3,1,0,-3,0,-3.00009,-3.00002)
+
+
+#A pretty accurate estimation of a derivative of a given function can be evaluated by following function.
+#It takes a function, two x-values and a 'nudge' value as input parameters. The two x-values are just two different, arbitrary
+#values at which the function is going to be evaluated. For both values, a respectively very close value (x + the very small 'nudge'
+#parameter) is added and the respective secant lines (which are, for very close values, approximately the tangent lines) are evaluated.
+#Finding the slopes of both x1 and x2 in this way, the approximate derivative f'(x) can be evaluated
+def derivative_estimation(int1, int2, int3, x1, x2, nudge):
+    #evaluate f(x1) and f(x2)
+    eval_x1 = (int1*x1**2) + (int2*x1) + int3
+    print (eval_x1)
+    eval_x2 = (int1*x2**2) + (int2*x2) + int3
+    print (eval_x2)
+    #evaluate f(x1+the tiny nudge value) and f(x2+the tiny nudge value)
+    eval_x1_nudged = (int1*(x1+nudge)**2) + (int2*(x1+nudge)) + int3
+    print (eval_x1_nudged)
+    eval_x2_nudged = (int1*(x2+nudge)**2) + (int2*(x2+nudge)) + int3
+    print (eval_x2_nudged)
+    #calculate the slopes for both x1 and x2. Due to the tiny size of the nudge parameter, the difference between x_nudged and x is of course
+    #almost zero, but not quite zero. It is technically the limit as 'slope_x' goes to zero.
+    slope_x1 = (eval_x1_nudged - eval_x1) / ((x1+nudge) - x1)
+    print (slope_x1)
+    slope_x2 = (eval_x2_nudged - eval_x2) / ((x2+nudge) - x2)
+    print (slope_x2)
+    #find m and b and construct the general slope formula y=mx+b
+    m = (slope_x2 - slope_x1) / (x2-x1)
+    b = (m*x1) - slope_x1
+    b = b/-1
+
+    print ("The estimated derivative ( f'(x) ) for any arbitrary x-values is: " + str(m) + "x" + "+" + str(b))
+
+derivative_estimation(4,0,0,3,6,0.00000000001)
 

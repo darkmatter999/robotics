@@ -1,0 +1,17 @@
+f'(x) (or x_dot ...) = limit as h goes to 0 (lim h-->0) of ( f(x+h) - f(x) ) / (h)
+h is the value that nudges x slightly to the left or right. As h gets closer to 0, h then becomes effectively 'like' x and the secant
+line representing the slope of the average rate of change of a function at a given interval becomes the instantaneous rate of change at one
+single arbitrary point of the function.
+
+Example: f(x) = x² -->
+
+f'(x) = lim h-->0  ( (x+h)² - x² ) / (h)
+
+This can be simplified to x² + 2xh + h² - x² / h
+
+Cancelling out as much as possible we yield 2x + h
+
+Finally, evaluating the limit of h-->0 we yield 2x + 0 = 2x
+
+So the derivative (i.e. the instantaneous rate of change) for any arbitrary point for the function f(x) = x² is 2x.
+
