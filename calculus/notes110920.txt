@@ -1,0 +1,771 @@
+y=sqrt(x)
+dx/dt=12
+
+find dy/dt when x = 9
+
+dy/dt = dy/dx * dx/dt
+
+dy/dt = 1/2x^-1/2 * dx/dt
+
+      = 1/2*(9^-1/2) * 12
+
+-sin(pi/2)*5
+
+3y = cos(x)
+
+dy/dt (3y) = dx/dt (cos(x))
+
+3*dy/dt = -sin(x)*dx/dt
+
+15 = -1
+
+dx/dt(sin(x)) + dy/dt(cos(y)) = d/dt(sqrt(2))
+
+dx/dt*cos(x) - dy/dt(sin(y) = 0
+
+5*cos(x) - dy/dt*sin(pi/4) = 0
+
+? + 0.707 = 1.41
+
+5/sqrt(2) - dy/dt*1/sqrt(2) = 0
+3.553 - ?*0.707 = 0
+
+xy = 4
+
+(dx/dt*x) * (dy/dt*0.5) = 0
+
+? * 0.5 = 0
+
+y² = 7x+1
+
+2y*dy/dt = 7 * dx/dt 
+
+12*dy/dt = -21
+
+y² = x² - 5
+
+2y*dy/dt = 2x*dx/dt
+
+-4*2.1 = 2x*dx/dt
+
+4 = ? - 5
+x=9
+sqrt(9) = 3
+x=3
+
+-8.4 = 6*dx/dt
+-1.4
+
+sin(y) = -5x
+
+cos(-pi)*dy/dt = -5*dx/dt
+cos(-pi)*10 = -5*dx/dt
+-10 = -5*2
+
+x³ - y² = 7
+
+(dx/dt*3x²) - (dy/dt*2y) = 0
+
+? - 1 = 7
+x = 2
+
+6 - (dy/dt*-2) = 0
+6 - (-3*-2) = 0
+
+
+dr/dt = -6.5
+r = 12
+
+da/dt = ?
+
+A = pi*r²
+A = 452.39
+
+pi*(2r*dr/dt)
+
+
+V = pi*r²*h
+
+dv/dt = ?
+
+r = 5
+h = 8
+
+dr/dt = 1
+dh/dt = -4
+
+PRODUCT RULE!
+dv/dt = pi*(2r*dr/dt)*(1*dh/dt)
+
+r²*(dh/dt) + (2r*dr/dt)*h
+
+25*-4 = -100
+
+10*8 = 80
+
+-100+80 = -20
+
+dv/dt ?
+
+r=8
+h=10
+
+dr/dt = 3
+dh/dt = -4
+
+dv/dt = pi*d/dt(r²*h/3)
+
+r²*(1/3*dh/dt) + h/3*(2r*dr/dt)
+
+64*1/3*-4 = -256/3
+
+10/3*16*3 = 160
+
+da/dt = ?
+
+b=5
+h=1
+
+db/dt = -13
+dh/dt = 6
+
+da/dt = h * b/2
+
+h*(1/2*db/dt) + b/2*(1*dh/dt)
+
+-6.5 + 2.5*6
+
+-6.5 + 15
+
+da/dt ?
+
+x=3
+y=9
+
+dx/dt = -5
+dy/dt = 14
+
+da/dt = x * y/2
+
+x*(1/2*dy/dt) + y/2*(1*dx/dt)
+
+21 -22.5
+
+
+x² + y² = s²
+
+person 30m
+car 16m
+
+d(distance car)
+---------------     ???
+dt
+
+30²+16² = s²
+
+s = 34
+
+2y * (dy/dt) = 2s * (ds/dt)
+
+-544 = 68 * ds/dt
+
+ds/dt = 8
+
+distance between bottom of ladder and wall ?
+
+1282
+
+35.81
+
+42*(-7) = 71.62 * (ds/dt)
+
+-294
+
+
+d/dt [x²+h²] = d/dt[100]
+dh/dt ?
+
+x²+h²=841
+
+21²+h²=841
+
+441+h²=841
+
+h=20
+
+d/dt [x²+h²] = 0
+
+dx/dt = -7
+
+2x*dx/dt + 2h*dh/dt = 0
+-294 + 40*? = 0
+
+-406 + 40*6.666
+
+-280 + 42*?= 0
+
+15² + 20² = 625
+c=25
+
+5/8
+
+30*5 + 40*8 = 50*?
+
+
+
+-16
+
+c=17
+
+-16 = 34*
+
+street lamp / owl:
+
+x/y = (x+10)/20 -->
+
+(20)(y) x/y = (x+10)/(20) * (20)(y) simplifies to -->
+20x = xy+10y
+x=30
+
+derivative (both sides) of [20x = xy + 10y]
+
+hot air balloon:
+
+relationship between theta and h? dh/dt needs to be found, i.e. the instantaneous rate of change of the height of the balloon with respect to the
+observer
+theta = pi/4
+tan(theta) = h / 500
+d-theta = 0.2
+500 is a constant
+-->solve for h-->
+then take derivative of both sides --> d/dt [tan(theta)] = d/dt [h/500]
+using chain rule --> sec²(theta)*(d-theta/dt) = 1/500*(dh/dt)
+
+v = 32pi/3
+v' = 25pi
+
+a = ?
+a' = ?
+
+relationship between volume and surface area of a sphere = 3/r
+
+3/r = 4pi*r²/(32pi/3)
+
+r = 2
+a = 50.27
+a' = ?
+
+take derivative of both sides:
+
+da/dt / 25pi
+-3/4 = x / 25pi
+x = -75/4pi
+
+a'*v - a*v'
+-----------
+v²
+
+-3/4 = ((x*50.27*32pi/3) - (50.26548245743669*25*150.8))/(32pi/3)²
+
+
+Volume cube = a³
+Surface area cube = 6a²
+
+v = 8
+v' = 18
+s = ?
+s' = ?
+a = ?
+a' = ?
+
+a = 2 (8 = 2³)
+s = 24 (6*4)
+
+S(t) = 6s(t)²
+S'(t) = 12s(t)s'(t) -- chain rule
+
+V(t) = s(t)³
+V'(t) = 3s(t)²s'(t) -- chain rule
+
+2 = s(t0)
+--> plug in this and the known V'
+--> 18 = 3(2)²s'(t0)
+--> 3/2 = s'(t0)
+
+plug this into S' to find S'
+
+so in conclusion --> first evaluate derivatives of both rates using the 
+chain rule, then plug in
+
+Circumference circle = 2*pi*r
+Area circle = pi*r²
+
+da/dt = ?
+c = 12pi
+c' = pi/2
+
+C(t) = 2*pi*r(t)
+C'(t) = 2pi*r'(t)
+
+A(t) = pi*r²
+A'(t) = 2pi*r * r'(t)
+
+12pi = 2*pi*x
+r = 6
+
+pi/2 = 2*pi*x
+r' = 1/4
+
+2pi*6 * 1/4
+
+S(t) = 4*pi*r(t)²
+S'(t) = 8*pi*r*r'(t)
+
+V(t) = 4/3*pi*r(t)³
+V'(t) = 4pi*r²*r'(t)
+
+36pi = 4*pi*r²
+r = 3
+
+14pi = 8*pi*3*x
+r' = 7/12
+
+4pi*9*(7/12)
+197.92
+
+surface area cube = 6s²
+volume cube = s³
+
+S(t) = 6*s(t)²
+S'(t) = 12s(t)*s'(t)
+
+V(t) = s(t)³
+V'(t) = 3s(t)²*s'(t)
+
+s(t) = 2
+
+15 = 24x
+
+s'(t) = 5/8
+
+12*(5/8)
+
+
+Local linearity (approximating functions):
+
+L(x) = f(appr. value) + f'(appr. value)(x-appr. value)
+
+L(1.9) = f(2) + f'(2)(1.9-2)
+1 + 4(-0.1) = 0.6
+
+y - y1 = m(x-x1)
+
+L(6.9) = f(7) + f'(7)(6.9-7)
+-2 + 5(-0.1)
+
+L(-0.9) = f(-1) + f'(-1)(-0.9--1)
+
+5 + 2(0.1)
+
+ln(x) + 1
+---------
+2x
+
+-e^x
+-----
+e^x/2-e^x
+
+-1 / 1
+
+6
+
+cos(3x) * 3
+1*3=3
+
+cos(x) - xsin(x) / sin(x) + (x+1)cos(x)
+
+-3
+18x
+
+0/18 = 0
+
+2e^(x²)*(2x²+1)
+
+8x-7
+2log(x)/x
+
+8
+2-2log(x)/x²
+
+4 / 8 = 1/2
+
+27-54+36=9
+
+9
+
+3x²-12x+12
+
+6-2 = 4
+1/2
+
+0+36 = 36
+
+
+-216+216-36 = -36
+
+6
+
+-15-30 = -15
+5
+
+closed interval : points a and b INCLUDED
+open interval : points a and b NOT INCLUDED
+
+1*(x-3) - 1*(x+1) / (x-3)²
+
+x-3 - x + 1
+
+-2
+(x-3)²
+
+-3x² + 6x
+
+3x²+6x-9=0
+x=-3
+x=1
+
+3x²-16x+21=0
+
+Concave downwards:
+f'(x) decreasing, f''(x) < 0
+
+Concave upwards:
+f'(x) increasing, f''(x) > 0
+
+g'(x) > 0 --> g++
+g'(x) < 0 --> g--
+g''(x) > 0 --> concave up
+g''(x) < 0 --> concave down
+
+12x³-48x²+48x=0
+36x² - 96x + 48 = 0
+
+-inf to 2/3: (0) --> 48 (pos.) --> concave up
+2/3 to 2  : (1) --> 36 - 96 + 48 (neg.) --> concave down
+2 to inf: (3) --> 324 - 288 + 48 (pos.) --> concave up
+
+4x³+12x²-96x
+12x²+24x-96=0 (-4/2)
+
+-inf to -4: (-5) --> pos. --> concave up
+-4 to 2: (1) --> neg. --> concave down
+2 to inf: (3) --> pos. --> concave up
+
+-5*
+
+-4x³+12x-2
+-12x²+12=0 (-1,1)
+
+-inf to -1: (-2) neg. --> concave downwards
+-1 to 1: (0) pos. --> concave upwards
+1 to inf: (2) neg. --> concave downwards
+
+8x³-30x²-144x
+24x²-60x-144=0 (-3/2, 4)
+
+-inf to -3/2: (-2) pos. --> concave up
+-3/2 to 4: (1) neg. --> concave down
+4 to inf: (5) pos. --> concave up
+
+(9)/((x-6)(cube root(x-6))) 
+-((12)/((x-6)²(cube root(x-6)))=0
+
+h²+s²/4 = s²
+
+Area: 1/2*s*sqrt(3)s/2 = (sqrt(3)*s²)/4 = (sqrt(3)/4)*(x/3)²
+
+sqrt(x-0)² + (f(x))-0)²
+
+sqrt(x²+[function]²)²
+
+v(t) = -t³+6t²+2t
+v'(t) = -3t²+12t+2
+v''(t) = -6t+12
+
+extrema: 
+2-sqrt(14/3)
+2+sqrt(14/3)
+
+3-sqrt(11)
+3+sqrt(11)
+
+y³-8y²+16y+1=0
+
+(2x-3y)/(3x-8y)
+-2y²+8y=8
+
+-2/t²
+-----
+1/t*(4t-3)*4 --> (16t-12)/t --> 12
+
+-2/9
+----
+12
+
+2e^t
+----
+2t
+
+(3/(2*sqrt(3+1))/(3-1)
+
+18t²+18
+-------
+3
+
+
+2e^2t
+-----
+3
+
+(4e^(2t))/3
+
+3t²
+---
+2t
+
+-8/t²
+-----
+-8/t²
+
+(1)/(-8/t³)
+
+1/2*sqrt(t)
+-----------
+
+
+((1)/(2*sqrt(t)))/(1)/(3*cube root(t)²))
+
+((1)/(6*sqrt(t)*cube root(t)²)/(1)/(3*cube root(t)²))
+
+(3*cube root(t²))/(2*sqrt(t))
+
+((sqrt(t))/(4*cube root(t²)²)) / (derivative of cube root(t))
+
+1/(2 sqrt(t)) / 1/(3 (t^(1/3))^2)
+
+9^t*log(9)
+----------
+3^t*log(3)
+
+(1 - 3/sqrt(t))
+(4/sqrt(t))
+
+12t^-3
+------
+6t^-4
+
+(2)/(6t^-4))
+
+(cos(t))/(sec²x)
+
+(4t³)/(3t²)
+
+(1/t*log(3))+(4t³+2)
+
+-4t³+2 --> -12t²
+
+-9t³+9 --> -27t² --> -54t --> -108
+t^4-16t --> 4t³-16 --> 12t² --> 48
+
+t^4+5t --> 4t³+5 --> 5
+t³+2 --> 3t² --> 0
+
+2t²+5 --> 4t --> 4
+-t³+4t² --> -3t²+8t --> -6t + 8
+
+sqrt(4² + 2²)
+
+4.47
+
+4t³-6t² --> 12t²-12t --> 24
+3t²+2t --> 6t+2 --> 14
+
+dx/dt = 5
+xy³
+
+
+1*dx/dt*y³ + 3y²*dy/dt*x = 0
+dy/dt = ?
+(5,2)
+
+40 + 12dy/dt*5 = 0
+dy/dt = -2/3
+
+y=-x³+5x
+dx/dt = 1
+(-1,-4)
+
+dy/dt = ?
+
+dy/dt = -3x²*dx/dt + 5dx/dt
+-3 + 5 = 2
+
+y=x²+1
+dx/dt = 3/2
+(1,2)
+dy/dt = ?
+
+dy/dt = 2x*dx/dt
+
+y=3x²+x
+dx/dt = 6
+(0,0)
+
+dy/dt = 6x*dx/dt+dx/dt
+
+y=r*sin(theta)
+x=r*cos(theta)
+
+theta=2pi
+
+cos(8theta)+4
+
+-sin(16pi)*cos(2pi) + cos(16pi)+4*-sin(2pi)
+
+5theta - 1
+
+5*sin(pi) + 5pi-1 * cos(pi)
+
+dy:
+1*sin(pi/2) + pi/2*cos(pi/2) --> 1+0 = 1
+dx:
+1*cos(pi/2) + pi/2*-sin(pi/2) --> -pi/2
+
+4sin(3theta)
+dy:
+4cos(3*pi/3)*3*sin(pi/3) + 4sin(3*pi/3)*cos(pi/3) --> -10.39 + 0 = -10.39 (-6 sqrt(3))
+dx:
+4cos(3*pi/3)*3*cos(pi/3) + 4sin(3*pi/3)*-sin(pi/3) --> -6+0 = -6
+
+e^theta
+dy:
+e^(3pi/4)*sin(3pi/4) + e^(3pi/4)*cos(3pi/4) --> 7.46 -7.46 = 0
+
+1+2sin(theta)
+dy:
+2cos(5pi/6)*sin(5pi/6) + 1+2sin(5pi/6)*cos(5pi/6) --> -(3*sqrt(3)/2)
+dx:
+2cos(5pi/6)*cos(5pi/6) + 1+2sin(5pi/6)*-sin(5pi/6) --> 0.5
+
+left triangle: 1
+left rectangle: 2
+trapezoid: 3
+right rectangle: 8
+right triangle: 1
+1+2+3+8+1=15
+
+55+385+27.5
+1+10+1.5+1+0.5
+450+40=490
+1+10+1.5+1+0.5
+
+10+2+14
+
+0.5*6 = 3
+1.5
+1
+
+0.5
+3+1.5+1
+
+2+1+2/3
+
+6+8+32+36
+
+8+12+10
+1/5 + 1/4 + 1/3
+
+width (delta-x)=2
+
+4+10+10
+
+(1.5^2)+(2.5^2)+(3.5^2)
+
+9+10+12+20
+
+(3/8) + (3/4) + (3/2) + 3
+
+xi = a + delta-x * i
+
+(0 + 1/5x)
+(3(1/5x)²)*1/5 --> 3x²/125 --> 0.024, (2) --> 0.096
+
+-1/((1/3x+1/6)-4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
