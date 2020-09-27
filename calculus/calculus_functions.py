@@ -134,24 +134,29 @@ eval_x = eval_x + intlist[-1]
 #approximating the definite integral (area under the curve) with a left rectangular Riemann sum.
 #We divide the area into n equal subdivisions and define the function interval for which the area approximation is required.
 #We take the sum of [0 to dx (interval) - 1] dx (intervals) * f(xi) where xi is dx*[function evaluation at running variable i + a
-# (start point of the interval)].
+#(start point of the interval)].
 #This sum is the area approximation.
+#We parametrize the function with 1) the function expression (here 'xi' takes the place of 'x', that accounts for the iterative method
+#of taking Riemann sums), 2) a, which is the x-value where the interval starts, 3) b, which is the x-value where the interval ends, and 4)
+#the number of equal subdivisions (number of rectangles) we like to sum.
 def integral_approx_left_riemann_sum(func, a, b, subdivs):
-    dx=(b-a)/subdivs
-    i=0
+    dx=(b-a)/subdivs #evaluate the width of each rectangle
+    i=0 #initialize i at 0 (for right Riemann sums i should start at 1)
     res=0
     while i < subdivs:
-        res = res + eval(func)
-        print (res)
-        i = i+1
-    print (res)
+        xi=(dx*i+a) #function evaluation, see comment above
+        res = res + dx*(eval(func)) #sum intermediate results
+        print (res) #(optionally) output intermediate results
+        i+=1 #increment i
+    print (res) #output the final result, i.e. the approximate area under the curve, or the definite integral
 
 #Example: f(x+3), interval 0 to 4, 4 subdivs
 #with 1000 subdivisions (intervals) the result comes very close to the real result (=20) but never quite reaches it. 
 #due to the left Riemann sum it always underestimates and will never converge
 #Right Riemann sums work in reverse. They overestimate maximally when the number of subdivisions is small and get closer to the actual result
 #when the number of subdivisions is high, but never converge to the actual result.
-integral_approx_left_riemann_sum('dx*(dx*i+a+3)', 3, 7, 10000)
+
+integral_approx_left_riemann_sum('xi+3', 0, 4, 4) #evaluate 'integral_approx_left_riemann_sum' with the function 'x+3'
 
 #function x² --- interval 3 to 7 --- 4 equal subdivisions
 #dx=1, a=3, 9+16+25+36=86
@@ -159,10 +164,6 @@ integral_approx_left_riemann_sum('dx*(dx*i+a+3)', 3, 7, 10000)
 #function x+3 --- interval 3 to 7 --- 4 equal subdivisions
 #dx=1, a=3, 6+7+8+9=30
 #right Riemann sum: 7+8+9+10=34
-
-#1.5+1.75+....
-
-
 
 '''
 Important trigonometric and other derivatives:
