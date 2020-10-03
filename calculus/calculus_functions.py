@@ -156,7 +156,16 @@ def integral_approx_left_riemann_sum(func, a, b, subdivs):
 #Right Riemann sums work in reverse. They overestimate maximally when the number of subdivisions is small and get closer to the actual result
 #when the number of subdivisions is high, but never converge to the actual result.
 
-integral_approx_left_riemann_sum('xi+3', 0, 4, 4) #evaluate 'integral_approx_left_riemann_sum' with the function 'x+3'
+integral_approx_left_riemann_sum('6*xi', -1, 0, 1000) #evaluate 'integral_approx_left_riemann_sum' with the function 'x+3'
+
+#********************************************************************************************************************************************
+#If, for example, the function which is integrated is the velocity function, then its (definite) integral is the net accumulation of change of the
+#original function, i.e. the position function. In other words, the position function is the 'antiderivative' of the velocity function. 
+#Taking the integral of the derivative recovers the original function.
+
+#A definite integral (interval from a to b) of a function f(x) can be algebraically deduced from its antiderative F(x) by evaluating F(b) - F(a),
+#where a is the start value of the interval, and b its end value.
+#********************************************************************************************************************************************
 
 #function x² --- interval 3 to 7 --- 4 equal subdivisions
 #dx=1, a=3, 9+16+25+36=86
@@ -180,6 +189,12 @@ d/dx [loga(x)] --> 1/(ln(a)*x)
 d/dx [asin(x)] --> 1/sqrt(1-x²)
 d/dx [acos(x)] --> -(1/sqrt(1-x²))
 d/dx [atan(x)] --> 1/1+x²
+
+Important trigonometric and other indefinite integrals:
+INDEFINITE INTEGRAL [1/x]dx --> ln|x| + C
+INDEFINITE INTEGRAL [e^x]dx --> e^x + C
+INDEFINITE INTEGRAL [sin(x)]dx --> -cos(x) + C
+INDEFINITE INTEGRAL [cos(x)]dx --> sin(x) + C
 
 Important rules:
 ----------------
@@ -231,6 +246,45 @@ Parametric equations:
 
 Parametric equations are eq.s of x and y with respect to something else, such as time.
 The differentiation rules of a set of parametric equations are (dy/dt)/(dx/dt)
+
+u-substitution (integral calculus):
+-----------------------------------
+
+When we want to integrate a function that looks like its derivative was found by the chain rule, we can try u-substitution. For the example
+2x*cos(x²) we implement the following steps:
+
+1) find u and du --> u is the 'inner function', i.e. x². du is then its derivative (the g'(x) of the chain rule), 2x. Using the way of the integral
+notation we find that 2x is actually '2x dx'
+
+2) rearrange the integral in the form u*du and substitute in u --> cos(u) du
+
+3) integrate in terms of x and substitute u back in --> sin(x²) dx
+
+4) for the final result, we need to add the (possible) constant, so --> sin(x²) + C
+
+5) to test, we can reverse this and find the derivative and yield 2x*cos(x²).
+
+Further example: integrate sqrt(5x) (int sqrt(5x) dx)
+
+1) identify u and du --> u is 5x, du is its derivative, i.e. 5 dx
+
+2) substitute in u and du --> sqrt(u)*du/5. Since du = 5dx, dx = du/5
+
+3) In order to separate our du again to later get our (notational) 'pure' dx back, we can use the integration property of scaling an integral.
+So we put 1/5 as a multiplier in front of the integral, becoming 1/5 int sqrt(u) du
+
+4) Now we can integrate u --> 1/5 * 2/3 (u)^3/2 + C (which is equivalent to u^3/2 / 3/2, with sqrt(u) being u^1/2 and then reverse power rule). The 'du'
+now disappears, since it is pure notational. ALWAYS KEEP THE 'u' IN PARENTHESES, I.E. ISOLATE IT!
+
+5) Substituting back in the real value of u and solving with respect to x --> 2/15 (1/5 * 2/3) (5x)^3/2 + C becomes our result, which can be simplified
+to 2/3*sqrt(5)x^3/2 + C
+
+********************************************************************************************************************************************
+If the derivative (the du) is not directly found in the function to be integrated, it needs to be 'made up' and multiplied by the expression
+in order to get the usual 'chain rule format'. In this case, as shown in the above sqrt(5x) example, it is necessary to divide the derivative again.
+This is why dx != du, but dx = du/5. We have to divide by the same '5' we added as du into the expression. If we didn't do that division, the whole
+function expression would be different, in other words, the function would be 5*sqrt(5x) instead of sqrt(5x)
+********************************************************************************************************************************************
 '''
 
 
