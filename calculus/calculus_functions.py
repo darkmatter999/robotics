@@ -156,7 +156,8 @@ def integral_approx_left_riemann_sum(func, a, b, subdivs):
 #Right Riemann sums work in reverse. They overestimate maximally when the number of subdivisions is small and get closer to the actual result
 #when the number of subdivisions is high, but never converge to the actual result.
 
-integral_approx_left_riemann_sum('6*xi', -1, 0, 1000) #evaluate 'integral_approx_left_riemann_sum' with the function 'x+3'
+#*************FUNCTION CALL**************************
+#integral_approx_left_riemann_sum('6*xi', -1, 0, 1000) #evaluate 'integral_approx_left_riemann_sum' with the function 'x+3'
 
 #********************************************************************************************************************************************
 #If, for example, the function which is integrated is the velocity function, then its (definite) integral is the net accumulation of change of the
@@ -173,6 +174,43 @@ integral_approx_left_riemann_sum('6*xi', -1, 0, 1000) #evaluate 'integral_approx
 #function x+3 --- interval 3 to 7 --- 4 equal subdivisions
 #dx=1, a=3, 6+7+8+9=30
 #right Riemann sum: 7+8+9+10=34
+
+#*********************************************************************************************************************************************
+#Euler's method
+#*********************************************************************************************************************************************
+
+#Given a first-order ODE and a given initial value, Euler's method helps us to estimate the solution of that ODE. The result may be visualized
+#with a slope field or a curve. We define a suitable 'delta_x' or step size to essentially define how narrow or wide a field we would like to
+#estimate. The smaller the step size, the more accurate the estimate is going to become.
+
+#The formula for deriving the 'new x' is: old x + delta_x.
+#The formula for deriving the 'new y' is: old y + old dy/dx*delta_x
+
+#For example, if we are given y'=y and an initial value of y(0) = 1, and step size 1, the results up to y(4) would look as follows:
+#x: 0, y: 1, dy/dx: 1
+#x: 1, y: 2, dy/dx: 2
+#x: 2, y: 4, dy/dx: 4
+#x: 3, y: 8, dy/dx: 8
+
+#The parameters for below algorithm are:
+# - f_prime, which is essentially the ODE (dy/dx=f_prime)
+# - init_x, which is the x in the given initial value
+# - init_y, which is the y in the given initial value
+# - delta_x, which is the step size, i.e. how much is x nudged for each subsequent estimate
+# - eval_limit, which is the last x value to be estimated
+
+def euler_method(f_prime, init_x, init_y, delta_x, eval_limit):
+    x=init_x
+    y=init_y
+    result_list=[[x, y, eval(f_prime)]]
+    while x < eval_limit:
+        y=y+(eval(f_prime)*delta_x)
+        result_list.append([x+delta_x, y, eval(f_prime)])
+        x=x+delta_x
+    print (result_list)
+    
+euler_method('x+y', 1, 2, 0.2, 4)
+
 
 '''
 Important trigonometric and other derivatives:
@@ -195,6 +233,10 @@ INDEFINITE INTEGRAL [1/x]dx --> ln|x| + C
 INDEFINITE INTEGRAL [e^x]dx --> e^x + C
 INDEFINITE INTEGRAL [sin(x)]dx --> -cos(x) + C
 INDEFINITE INTEGRAL [cos(x)]dx --> sin(x) + C
+
+Important trig identities:
+sin²x + cos²x = 1
+sin²x = 1/2*(1-cos(2x)) --> double angle identity
 
 Important rules:
 ----------------
@@ -285,6 +327,154 @@ in order to get the usual 'chain rule format'. In this case, as shown in the abo
 This is why dx != du, but dx = du/5. We have to divide by the same '5' we added as du into the expression. If we didn't do that division, the whole
 function expression would be different, in other words, the function would be 5*sqrt(5x) instead of sqrt(5x)
 ********************************************************************************************************************************************
+
+Integration by parts
+--------------------
+
+We integrate 'by parts' if we take the integral a composite of two functions whose derivative was found by the product rule. This means that
+we regard one of the functions as the derivative of another function. It can be any of the two functions to be integrated as a composite.
+To find the integral of f(x)g'(x), we solve f(x)g(x) - the integral of f'(x)g(x). 
+In order to find appropriate candidates for f(x) and g(x), respectively, it is important we set f(x) to be the function whose derivative is 
+'easier' to take than for g(x). This way the second part of above formula (the integral of f'(x)g(x)) is relatively easy to solve for.
+
+It might be necessary to use integration by parts twice, since the integral of the second part of the formula might not be obvious.
+
+Example: int x cos(x) -->
+set x to be f(x)
+set cos(x) to be g'(x)
+
+Then, x*cos(x) dx = x*sin(x) - (int 1*sin(x)...the latter being -cos(x)
+The result, therefore, is x sin(x) + cos(x) + C
+
+Another example -->
+
+int x³*ln(x) dx
+
+We set:
+f(x) = ln(x)
+g'(x) = x³
+
+Using the formula f(x)g'(x) = f(x)g(x) - int (f'(x)g(x)) yields:
+ln(x)*1/4x^4 - int ((1/x)*(1/4x^4)) --> result of the integral x^4/16
+int x³*ln(x) dx = (ln(x)*(1/4x^4) - (x^4/16) + C
+
+solving for a definite integral with upper bound e and lower bound 1 results in:
+3e^4/16 + 1/16
+
+Solving integrals with partial fractions
+----------------------------------------
+
+When we have two separate expressions, e.g. (x+2)(x-1) in the denominator of a function, in order to integrate, we need to split the function
+in two parts, one with a variable 'A' in the nominator, the other with a variable 'B' in the nominator. Hence, if we have a function
+
+1 - 2x
+------
+(x+1)(x-2)
+
+we split it up into
+
+A / x+1 --> x+1 being the first partial fraction, and
+B / x-2 --> x-2 being the second partial fraction
+
+Then we solve for both A and B by setting the nominator of the original function equal to A and B, respectively, diagonally times the respective
+partial fractions. So in above case this would be 1 - 2x = A*x-2 + B*x+1.
+
+We solve for A and B by setting x so that the respective other variable is set to 0.
+
+Having calculated A and B, we substitute them back in and solve for the integral, so
+
+int 1-2x / (x+1)(x-2) = int A / x+1 + int B / x-2.
+
+Some examples -->
+
+EXAMPLE 1:
+
+int (1) / (x+1)(3x+1)
+
+A / x+1 + B / 3x+1
+
+1 = A(3x+1) + B(x+1)
+
+substituting x = -1, A = -1/2
+substituting x = -1/3, B = 3/2
+
+-1/2    3/2
+----  + --- 
+x+1     3x+1
+
+in the second fraction, to get to 3 in the nominator,
+we need to multiply by 3. That means before the fraction,
+we need to divide by 3 (or multiply by 1/3). Hence, the resulting integral is
+
+-1/2 (ln(abs(x+1))) + (3/2 * 1/3) which is 1/2 (ln(abs(3x+1)))
+
+-----------------------------------------------
+
+EXAMPLE 2:
+
+int (18-12x) / (4x-1)(x-4)
+
+A / 4x-1 + B / x-4
+
+18-12x = A(x-4) + B(4x-1)
+
+substituting x = 1/4 --> A = -4
+substituting x = 4 --> B = -2
+
+-4          -2
+--    +     --
+4x-1        x-4
+
+in the first fraction, to get to 4 in the nominator,
+we need to multiply by 4. That means before the fraction,
+we need to divide by 4 (or multiply by 1/4). Hence, the resulting integral is
+
+(-4*1/4) which is -1 (ln(abs(4x+1))) - 2 (ln(abs(x-4)))
+
+-------------------------------------------------------------
+
+EXAMPLE 3:
+
+int (1) / (x+2)(x-2)
+
+A / x+2 + B / x-2
+
+1 = A(x-2) + B(x+2)
+
+substituting x = -2 --> A = -1/4
+substituting x = 2 --> B = 1/4
+
+-1/4     1/4
+----  +  ---
+x+2      x-2
+
+We do not need to multiply anything since both fractions are now already
+in the form '1/x' for which the indefinite integral is ln(abs(x)). Hence, the resulting integral is
+
+-1/4 (ln(abs(x+2))) + 1/4 (ln(abs(x-2)))
+
+-----------------------------------------------------------------
+
+EXAMPLE 4:
+
+int (2-4x) / (x+2)(x-3)
+
+A / x+2 + B / x-3
+
+2-4x = A(x-3) + B(x+2)
+
+substituting x = -2 --> A = -2
+substituting x = 3 --> B = -2
+
+-2       -2
+--   +   --
+x+2      x-3
+
+We do not need to multiply anything since both fractions are now already
+in the form '1/x' for which the indefinite integral is ln(abs(x)). Hence, the resulting integral is
+
+-2 (ln(abs(x+2))) -2 (ln(abs(x-3)))
+
 '''
 
 
