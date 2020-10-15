@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 #This program evaluates the average rate of change of a function at an arbitrary interval.
 #It takes a parabolic function of the form '[int1]x^2+[int2]x+[int3]' (e.g. 5x^2-4x+3) as input
@@ -198,19 +199,39 @@ def integral_approx_left_riemann_sum(func, a, b, subdivs):
 # - init_y, which is the y in the given initial value
 # - delta_x, which is the step size, i.e. how much is x nudged for each subsequent estimate
 # - eval_limit, which is the last x value to be estimated
+# -- optionally -- for the dict representation, we can choose an x to be evaluated (and correspondingly indexed into the dict)
 
-def euler_method(f_prime, init_x, init_y, delta_x, eval_limit):
+def euler_method(f_prime, init_x, init_y, delta_x, eval_limit, eval_x):
     x=init_x
     y=init_y
-    result_list=[[x, y, eval(f_prime)]]
-    while x < eval_limit:
+    #result_list=[[x, y, eval(f_prime)]] #list representation
+    result={x:(y, eval(f_prime))} #dict representation
+    i=init_x
+    while i < eval_limit:
         y=y+(eval(f_prime)*delta_x)
-        result_list.append([x+delta_x, y, eval(f_prime)])
         x=x+delta_x
-    print (result_list)
+        #result_list.append([x, y, eval(f_prime)]) #list representation
+        result[x]=(y, eval(f_prime)) #dict representation
+        i+=delta_x
+    #print (result[eval_x])
+    #copy the dict entries into two plottable lists and plot the function estimate
+    x_values, y_values=[],[]
+    for x_val in result.keys():
+        x_values.append(x_val)
+    for y_val in result.values():
+        y_values.append(y_val[0])
+    plt.plot(x_values, y_values)
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.show()
+    print (result)
     
-euler_method('x+y', 1, 2, 0.2, 4)
+euler_method('x+y', 1, 2, 0.2, 4, 2) #function call for y'=x+y with initial given value y(1) = 2
 
+#The analytical solution for y'=x+y is [c]e^x-x-1. For above initial value y(1) = 2, the full solution (adding in the constant [c]) is
+#-(ex-4e^x+e)/e. Evaluating the correctness of y(1) = 2, we plug 1 into the ODE solution, yielding -(e - 4e + e)/e = approximately
+#-(2.7 - 10.8 + 2.7)/2.7 = 2. Checking the ODE constraint y'=x+y, we take the derivative of -(ex-4e^x+e)/e, which is -(-4e^x+1+e)/e, 
+#and plugging in 1, we get approximately 3. Setting this 3 equal to x+y, we get 3 = 1 + 2, which is true.
 
 '''
 Important trigonometric and other derivatives:
