@@ -496,6 +496,87 @@ in the form '1/x' for which the indefinite integral is ln(abs(x)). Hence, the re
 
 -2 (ln(abs(x+2))) -2 (ln(abs(x-3)))
 
+---------------------------------------------------------------------------
+
+SOLVING EXPONENTIAL AND LOGISTIC MODEL DIFFERENTIAL EQUATIONS
+-------------------------------------------------------------
+
+GENERAL SOLUTION FOR **EXPONENTIAL** MODELS
+
+From rate of change to accumulation of change (from derivative to integral)
+
+dP/dt = kP --> price change is proportional to a constant multiplied by the price
+dP = kP dt --> rearrange in order to take the integral
+dP/kP = dt
+ln(P)/k = t + C --> take integral
+ln(P) = kt + C
+e^(ln(P) = e^kt+C
+P = e^kt * e^C --> e^C is a constant and can be any arbitrary real number, hence 
+P = C*e^kt
+
+EXAMPLE:
+
+A computer's price decreases proportionally to its initial price.
+The initial price was USD 850. After two years, the price is now USD 306.
+What will be the price after 5 years?
+
+Following above general solution, we calculate
+
+C=850 --> given initial price (price upon purchase)
+calculate ratio of the given value after two years and initial price
+P(t+2) = 306
+------------  =  9/25
+P(t)   = 850
+
+which can be expressed as:
+
+C*e^kt+2
+--------   =  9/25
+C*e^kt
+rearrange:
+C*e^kt+2k-kt = 9/25 
+e^2k = 9/25
+ln(e^2k) = ln(9/25)
+2k = ln(9/25)
+k = ln(9/25)/2
+
+solve for the computer's price after 5 years, i.e. P(t) when t is 5
+P(5) = 850*e^(ln(9/25)/2*5) --> this formula represents C*e^kt .. where C=850, k is ln(9/25)/2, and t is 5.
+
+GENERAL SOLUTION FOR **LOGISTIC** MODELS
+
+The difference between exponential and logistic models is that the latter takes into account a maximum 'carrying capacity' of whatever is modeled
+(a population, for instance). It follows the Malthusian idea that a population cannot grow forever but has its natural limits. Whereas exponential
+growth can grow to infinitely, logistic growth is 'capped', and if the maximum 'carrying capacity' is reached, the growth becomes 0.
+
+As a concrete example, let's imagine a bottle which carries 1 liter. If, by a given method, you pour liquid in this bottle, the liquid volume inside
+the bottle cannot grow any more if the bottle is full, i.e. it cannot hold more than 1 liter. The growth stops there. It reaches its natural limit
+(because the bottle can only carry 1 liter).
+
+The exponential formula *** dN/dt = rN *** is, for logistic equations, multiplied by the term 1 - N/K, where K is the carrying capacity. The closer N
+(which is the 'population', or whatever else we model) is to K, the slower growth becomes until it stops completely, i.e. when N = K. With a small N,
+growth is essentially exponential, however.
+
+So, dN/dt = rN * 1-N/K
+and
+N(t) = N_init*K / N_init + (K-N_init)e^-rt, where N_init is the initial 'population', K is the carrying capacity, and N is the population.
+
+If we have a bottle that carries a maximum of 1 liter (so K = 1), and an initial liquid level of 100 ml (N_init = 0.1), and furthermore the
+observation that after 2 seconds of pouring a certain liquid into the bottle, the quantity doubles, we may now model the quantity
+(which is essentially the net accumulation of change, the integral value) of that liquid after 5 seconds.
+
+First we solve for r, which is the ratio between our initial qty and the experimental measurement after 2 seconds have elapsed.
+
+QTY(t+2)
+--------  =  2
+QTY(t)
+
+Following the examples above (exponential models) for finding k (which is now named r), we establish that r = ln(2)/2
+
+We can now directly plug in all known values and solve for N(5) -->
+N(5) = 0.1*1 / 0.1 + (1-0.1)*e^-(ln(2)/2*5) = approximately 0.39.
+This means that after 5 seconds the qty in the bottle will be around 400 ml. Our 'cap' guarantees that the qty can never be higher than 1 liter.
+
 '''
 
 
