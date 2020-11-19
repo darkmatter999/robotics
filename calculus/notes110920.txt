@@ -1491,6 +1491,11 @@ P = C*e^kt
 
 N(t) = N_init*K / N_init + (K-N_init)e^-rt
 
+avg = delta_d / delta_t
+
+avg*delta_t = delta_d
+avg*delta_d = delta_t
+
 
 
 

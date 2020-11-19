@@ -275,7 +275,8 @@ Position/velocity/speed/acceleration:
 -------------------------------------
 
 Speed is the magnitude, or absolute value of velocity. This means it's possible to 'speed up' even when 'moving backward', i.e. even when 
-the velocity is negative.
+the velocity is negative. Velocity, on the other hand, has a magnitude, so it is essentially a vector, whereas speed is represented by a scalar
+(pure magnitude/size, no direction).
 
 Mean value theorem (MVT):
 -------------------------
