@@ -21,6 +21,10 @@ import pyaudio #Audio processing library
 import time #for (optional) timing
 import pyttsx3 #Library for TTS
 
+#initialize two empty lists for keeping track of messages and responses
+response_list = []
+message_list = []
+
 #Since DeepSpeech audio recording streaming doesn't currently work, below is a naive 'fake audio streamer'.
 #The function records an audio snippet via PyAudio and saves it to 'output.wav' for further processing via
 #DeepSpeech and AIML
@@ -224,6 +228,8 @@ def initiation():
             wakeup_wait = False
             conversation() #if hotword is heard, switch to open conversation mode
         elif message == 'exit':
+            print (message_list)
+            print (response_list)
             exit()
 
 def conversation():
@@ -240,8 +246,12 @@ def conversation():
             message = input("Enter your message to the bot: ")
             bot_response = kernel.respond(message)
             print (bot_response)
+        elif message == "":
+            pass
         else:
             bot_response = kernel.respond(message)
+            message_list.append(message)
+            response_list.append(bot_response)
             # Do something with bot_response
             #print (bot_response)
             time.sleep(3)
