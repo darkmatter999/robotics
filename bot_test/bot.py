@@ -2,13 +2,24 @@
 #***************************AIML/DEEP LEARNING HYBRID VOICE CHATBOT V0.01************************************
 #************************************************************************************************************
 
+#This code has been tested on Ubuntu 20.04 and Windows 10.
+#In Windows, it apparently does not work with the venv because it does not accept the pre-trained DeepSpeech model
+#Furthermore, to get pyaudio to work in the Win10 environment, it is necessary to move the libdeepspeech.so file from
+#lib/ to root/
+#As of now, pyttsx3 does not work in Python3.8. It has been successfully tested in Python3.7.9, though.
+
+#Future challenges:
+#implement a true audio stream (i.e. getting rid of saving the recording first and then post-process it)
+#implement AIML 2.0 instead of 1.0
+#post-process conversational elements
+
 import aiml
 import deepspeech #Mozilla Speech Recognition Framework
 import wave #Module for processing .wav audio
 import numpy as np
 import pyaudio #Audio processing library
 import time #for (optional) timing
-#import pyttsx3 #Library for TTS
+import pyttsx3 #Library for TTS
 
 #Since DeepSpeech audio recording streaming doesn't currently work, below is a naive 'fake audio streamer'.
 #The function records an audio snippet via PyAudio and saves it to 'output.wav' for further processing via
@@ -66,7 +77,7 @@ def record_wakeup():
 
     p = pyaudio.PyAudio()  # Create an interface to PortAudio
 
-    print('Recording')
+    print('Waiting for initiation')
 
     stream = p.open(format=sample_format,
                 channels=channels,
@@ -156,29 +167,86 @@ while True:
 # To be improved in the future: 
 # 1. What happens with exceptions?
 # 2. --- TBD
-while True:
-    record_wakeup()
+'''
+wakeup_wait = True
+talk = False
+
+while wakeup_wait:
+    record_wakeup() #wait for 'talk' hotword
     message = audio('wakeup.wav')
     if message == 'talk':
-        record_question() #open recording instance
-        #message = audio('audio/8455-210777-0068.wav')
-        #It is a 'fake audio stream', i.e. here we have to hardcode the output file
-        #In future, this should be replaced by STREAM --> INFERENCE --> OUTPUT
-        #Right now, it is RECORDING --> OUTPUT FILE --> INFERENCE --> OUTPUT
-        message = audio('output.wav') 
-        #print (kernel.respond(message)) #optional display of response
-    if message == "quit":
+        wakeup_wait = False
+        talk = True
+        while talk:
+            record_question() #open recording instance
+            #message = audio('audio/8455-210777-0068.wav')
+            #It is a 'fake audio stream', i.e. here we have to hardcode the output file
+            #In future, this should be replaced by STREAM --> INFERENCE --> OUTPUT
+            #Right now, it is RECORDING --> OUTPUT FILE --> INFERENCE --> OUTPUT
+            message = audio('output.wav') 
+            #print (kernel.respond(message)) #optional display of response
+            if message == "exit":
+                #exit()
+                
+                #break
+                
+                talk = False
+                #continue
+            elif message == "save":
+                kernel.saveBrain("bot_brain.brn")
+            elif message == "type":
+                message = input("Enter your message to the bot: ")
+                bot_response = kernel.respond(message)
+                print (bot_response)
+            else:
+                bot_response = kernel.respond(message)
+                # Do something with bot_response
+                print (bot_response)
+                time.sleep(3)
+                #engine = pyttsx3.init() #output the bot's reponse via pyttsx3 (TTS)
+                #engine.say(bot_response)
+                #engine.runAndWait()
+    if message == 'exit':
+        print (wakeup_wait)
         exit()
-    elif message == "save":
-        kernel.saveBrain("bot_brain.brn")
-    elif message == "type":
-        message = input("Enter your message to the bot: ")
-        bot_response = kernel.respond(message)
-        print (bot_response)
-    else:
-        bot_response = kernel.respond(message)
-        # Do something with bot_response
-        print (bot_response)
-        #engine = pyttsx3.init() #output the bot's reponse via pyttsx3 (TTS)
-        #engine.say(bot_response)
-        #engine.runAndWait()
+    '''
+
+#We toggle between 'waiting for initiation' (i.e. hotword utterance) and 'talk mode'
+#In practice, the system should work more 'Alexa-like', i.e. 'always-on' and always listening for the hotword before the actual 
+#conversational content or question.
+
+def initiation():
+    wakeup_wait = True
+    while wakeup_wait:
+        record_wakeup() #wait for 'talk' hotword
+        message = audio('wakeup.wav')
+        if message == 'talk':
+            wakeup_wait = False
+            conversation() #if hotword is heard, switch to open conversation mode
+        elif message == 'exit':
+            exit()
+
+def conversation():
+    talk = True
+    while talk:
+        record_question()
+        message = audio('output.wav')
+        if message == "exit":
+            talk = False
+            initiation() #if 'exit' is heard, switch back to hotword listening, or initiation
+        elif message == "save":
+            kernel.saveBrain("bot_brain.brn")
+        elif message == "type":
+            message = input("Enter your message to the bot: ")
+            bot_response = kernel.respond(message)
+            print (bot_response)
+        else:
+            bot_response = kernel.respond(message)
+            # Do something with bot_response
+            #print (bot_response)
+            time.sleep(3)
+            engine = pyttsx3.init() #output the bot's reponse via pyttsx3 (TTS)
+            engine.say(bot_response)
+            engine.runAndWait()
+    
+initiation()

@@ -23,6 +23,13 @@
     </category>
 
     <category>
+        <pattern>HOW OLD ARE YOU</pattern>
+        <template>
+            20
+        </template>
+    </category>
+
+    <category>
         <pattern>WHAT IS YOUR NAME</pattern>
         <template>
             Richard
