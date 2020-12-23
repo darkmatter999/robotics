@@ -37,7 +37,7 @@
             </ul>
             <br>
             <div>
-                Some principles to think about:
+                <h1>Food for Thought:</h1>
                 <ul>
                     <li>Allow imperfection and imprecision instead of enforcing precision and "correctness" all the time,
                         uncertainty is something positive.
@@ -50,6 +50,52 @@
                     <li>Don't reinvent the wheel when there is a (non-proprietary) solution available</li>
                     <li>Learn to walk with an RL approach? Solve problems of balance and autonomy.</li>
                     <li>Make use of affordable control mechanisms for PAMs</li>
+                </ul>
+            </div>
+            <br><br>
+            <div>
+                Consider the head as the first project part:
+                Think of three 'layers' of design -->
+                <br>
+                <ul>
+                    <li><b>First layer: Appearance/'Feel'</b>
+                        <br>
+                        Create an initially static head that can potentially pass a 'Physical Turing Test'
+                        <ul>1. Sculpting/modeling face and head</ul>
+                        <ul>2. Use 'realistic' elastomer to create a human-like mask</ul>
+                        <ul>3. Put skull and face (mask) together to make correct actuation possible</ul>
+                    </li>
+                    <br>
+                    <li><b>Second layer: Mimicry/'Aliveness'</b>
+                        <br>
+                        Bring the head to life by imitating an array of human facial expressions (check Paul Ekman)
+                        <ul>1. Facial expressions</ul>
+                        <ul>2. Eye expressions</ul>
+                        <ul>3. Lip sync while talking -- could be a very challenging task (jaw mechanism)</ul>
+                        <ul>4. Head movement using a neck mechanism</ul>
+                        The challenge is to find the most appropriate actuation: Servos, PAM, other soft actuators, tendons ???
+                        Another crucial task is to actuate the mask autonomously (untethered) in accordance with head movement.
+                    </li>
+                    <br>
+                    <li><b>Third layer: Brain/'Intelligence'</b>
+                        <br>
+                        Deploy a mixture of 'TinyML', more sophisticated CPU-based or cloud-based AI and sensors to 
+                        <ul>1. Make the head react to human contact (counter-react a human expression with an appropriate counter-expression)</ul>
+                        <ul>2. 'Wake up' (see Alexa) -- TinyML</ul>
+                        <ul>3. Recognize known interlocutors -- TinyML</ul>
+                        <ul>4. See and identify things -- traditional ML</ul>
+                        <ul>5. Talk / engage in a purposeful conversation -- here, deterministic methods such as AIML must be considered vs. ML-based NLP.
+                            Furthermore, evaluate text-to-speech (TTS) and, reversely, speech recognition (STT) methods.  
+                            Possible concrete implementation of STT --> Chatbot --> TTS:
+                            <li>
+                                <ul>1. Use Mozilla DeepSpeech to capture microphone audio and infer the content. Then save it to a string</ul>
+                                <ul>2. Use that string as input ('question') for an AIML-based chatbot</ul>
+                                <ul>3. Process the reply in pyttsx3 for subsequent TTS voice output</ul>
+                            </li>                      
+                        </ul>
+                        <br>
+                        With certain exceptions, all three described layers can be developed more or less independently from one another.
+                    </li>
                 </ul>
             </div>
     </body>

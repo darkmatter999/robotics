@@ -1,0 +1,60 @@
+<aiml version="1.0.1" encoding="UTF-8">
+<!-- basic_chat.aiml -->
+
+    <category>
+        <pattern>HELLO</pattern>
+        <template>
+            Well, hello!
+        </template>
+    </category>
+
+    <category>
+        <pattern>YOUR PART IS SUFFICIENT I SAID</pattern>
+        <template>
+            Works!
+        </template>
+    </category>
+
+    <category>
+        <pattern>HI</pattern>
+        <template>
+            Good morning!
+        </template>
+    </category>
+
+    <category>
+        <pattern>WHAT IS YOUR NAME</pattern>
+        <template>
+            Richard
+        </template>
+    </category>
+
+    <category>
+        <pattern>HOW ARE YOU</pattern>
+        <template>
+            Very fine
+        </template>
+    </category>
+
+    <category>
+        <pattern>DO YOU KNOW MY NAME AND MY AGE</pattern>
+        <template>
+            Of course I do
+        </template>
+    </category>
+
+    <category>
+        <pattern>GOOD MORNING</pattern>
+        <template>
+            Good morning to you, too!
+        </template>
+    </category>
+    
+    <category>
+        <pattern>WHAT ARE YOU</pattern>
+        <template>
+            I'm a bot, silly!
+        </template>
+    </category>
+    
+</aiml>

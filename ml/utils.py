@@ -1,14 +1,12 @@
 import re
 import string
 
+import numpy as np
+import pandas as pd
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.tokenize import TweetTokenizer
-
-from matplotlib.patches import Ellipse
-import matplotlib.transforms as transforms
-
-import numpy as np # Library for linear algebra and math utils
+import matplotlib.pyplot as plt 
 
 
 def process_tweet(tweet):
@@ -45,84 +43,67 @@ def process_tweet(tweet):
     return tweets_clean
 
 
-def test_lookup(func):
-    freqs = {('sad', 0): 4,
-             ('happy', 1): 12,
-             ('oppressed', 0): 7}
-    word = 'happy'
-    label = 1
-    if func(freqs, word, label) == 12:
-        return 'SUCCESS!!'
-    return 'Failed Sanity Check!'
+def get_dict(file_name):
+    """
+    This function returns the english to french dictionary given a file where the each column corresponds to a word.
+    Check out the files this function takes in your workspace.
+    """
+    my_file = pd.read_csv(file_name, delimiter=' ')
+    etof = {}  # the english to french dictionary to be returned
+    for i in range(len(my_file)):
+        # indexing into the rows.
+        en = my_file.loc[i][0]
+        fr = my_file.loc[i][1]
+        etof[en] = fr
+
+    return etof
 
 
-def lookup(freqs, word, label):
+def cosine_similarity(A, B):
     '''
     Input:
-        freqs: a dictionary with the frequency of each pair (or tuple)
-        word: the word to look up
-        label: the label corresponding to the word
+        A: a numpy array which corresponds to a word vector
+        B: A numpy array which corresponds to a word vector
     Output:
-        n: the number of times the word with its corresponding label appears.
+        cos: numerical number representing the cosine similarity between A and B.
     '''
-    n = 0  # freqs.get((word, label), 0)
+    # you have to set this variable to the true label.
+    cos = -10
+    dot = np.dot(A, B)
+    norma = np.linalg.norm(A)
+    normb = np.linalg.norm(B)
+    cos = dot / (norma * normb)
 
-    pair = (word, label)
-    if (pair in freqs):
-        n = freqs[pair]
+    return cos
 
-    return n
-
-# From: https://matplotlib.org/3.1.1/gallery/statistics/confidence_ellipse.html#sphx-glr-gallery-statistics-confidence-ellipse-py
-
-
-def confidence_ellipse(x, y, ax, n_std=3.0, facecolor='none', **kwargs):
-    """
-    Create a plot of the covariance confidence ellipse of `x` and `y`
-    Parameters
-    ----------
-    x, y : array_like, shape (n, )
-        Input data.
-    ax : matplotlib.axes.Axes
-        The axes object to draw the ellipse into.
-    n_std : float
-        The number of standard deviations to determine the ellipse's radiuses.
-    Returns
-    -------
-    matplotlib.patches.Ellipse
-    Other parameters
-    ----------------
-    kwargs : `~matplotlib.patches.Patch` properties
-    """
-    if x.size != y.size:
-        raise ValueError("x and y must be the same size")
-
-    cov = np.cov(x, y)
-    pearson = cov[0, 1] / np.sqrt(cov[0, 0] * cov[1, 1])
-    # Using a special case to obtain the eigenvalues of this
-    # two-dimensionl dataset.
-    ell_radius_x = np.sqrt(1 + pearson)
-    ell_radius_y = np.sqrt(1 - pearson)
-    ellipse = Ellipse((0, 0),
-                      width=ell_radius_x * 2,
-                      height=ell_radius_y * 2,
-                      facecolor=facecolor,
-                      **kwargs)
-
-    # Calculating the stdandard deviation of x from
-    # the squareroot of the variance and multiplying
-    # with the given number of standard deviations.
-    scale_x = np.sqrt(cov[0, 0]) * n_std
-    mean_x = np.mean(x)
-
-    # calculating the stdandard deviation of y ...
-    scale_y = np.sqrt(cov[1, 1]) * n_std
-    mean_y = np.mean(y)
-
-    transf = transforms.Affine2D() \
-        .rotate_deg(45) \
-        .scale(scale_x, scale_y) \
-        .translate(mean_x, mean_y)
-
-    ellipse.set_transform(transf + ax.transData)
-    return ax.add_patch(ellipse)
+# Procedure to plot and arrows that represents vectors with pyplot
+def plot_vectors(vectors, colors=['k', 'b', 'r', 'm', 'c'], axes=None, fname='image.svg', ax=None):
+    scale = 1
+    scale_units = 'x'
+    x_dir = []
+    y_dir = []
+    
+    for i, vec in enumerate(vectors):
+        x_dir.append(vec[0][0])
+        y_dir.append(vec[0][1])
+    
+    if ax == None:
+        fig, ax2 = plt.subplots()
+    else:
+        ax2 = ax
+      
+    if axes == None:
+        x_axis = 2 + np.max(np.abs(x_dir))
+        y_axis = 2 + np.max(np.abs(y_dir))
+    else:
+        x_axis = axes[0]
+        y_axis = axes[1]
+        
+    ax2.axis([-x_axis, x_axis, -y_axis, y_axis])
+        
+    for i, vec in enumerate(vectors):
+        ax2.arrow(0, 0, vec[0][0], vec[0][1], head_width=0.05 * x_axis, head_length=0.05 * y_axis, fc=colors[i], ec=colors[i])
+    
+    if ax == None:
+        plt.show()
+        fig.savefig(fname)

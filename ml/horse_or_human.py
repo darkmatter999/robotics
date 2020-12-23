@@ -101,7 +101,7 @@ val_IDG = val_dataset_IDG.flow_from_directory('img/horse_or_human_2/horse_or_hum
 start_time = timeit.default_timer()
 
 #fit the model
-history = model.fit(train_IDG, steps_per_epoch=8, epochs=500, verbose=1, validation_data = val_IDG, validation_steps=8)
+history = model.fit(train_IDG, steps_per_epoch=8, epochs=50, verbose=1, validation_data = val_IDG, validation_steps=8)
 
 algorithm_running_time = (timeit.default_timer() - start_time) / 60
 print("The time taken for model fitting is :", algorithm_running_time, "minutes")
