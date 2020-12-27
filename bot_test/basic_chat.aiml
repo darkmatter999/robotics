@@ -2,7 +2,14 @@
 <!-- basic_chat.aiml -->
 
     <category>
-        <pattern>HELLO</pattern>
+        <pattern>HE HELLO</pattern>
+        <template>
+            Well, hello!
+        </template>
+    </category>
+
+    <category>
+        <pattern>HEY HELLO</pattern>
         <template>
             Well, hello!
         </template>
@@ -14,6 +21,20 @@
             Works!
         </template>
     </category>
+
+    <category>
+      <pattern>I AM *</pattern>
+      <template>
+         Hello <set name = "username"> <star/>! </set>
+      </template>  
+   </category>  
+
+   <category>
+      <pattern>HELLO GOOD NIGHT</pattern>
+      <template>
+         Hi <get name = "username"/> Thanks for the conversation!
+      </template>  
+   </category>  
 
     <category>
         <pattern>HI</pattern>

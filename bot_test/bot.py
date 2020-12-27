@@ -6,7 +6,7 @@
 #In Windows, it apparently does not work with the venv because it does not accept the pre-trained DeepSpeech model
 #Furthermore, to get pyaudio to work in the Win10 environment, it is necessary to move the libdeepspeech.so file from
 #lib/ to root/
-#As of now, pyttsx3 does not work in Python3.8. It has been successfully tested in Python3.7.9, though.
+#As of now, pyttsx3 does not work in Python 3.8. It has been successfully tested in Python 3.7.9, though.
 
 #Future challenges:
 #implement a true audio stream (i.e. getting rid of saving the recording first and then post-process it)
