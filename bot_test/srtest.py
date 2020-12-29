@@ -14,7 +14,7 @@ r = sr.Recognizer()
 def record():
     with mic as source:
         #r.adjust_for_ambient_noise(source, duration = 1)
-        r.energy_threshold = 12000
+        r.energy_threshold = 4000
         aud = r.listen(source)
         with open('speech.wav', 'wb') as f:
             f.write(aud.get_wav_data(16000))
