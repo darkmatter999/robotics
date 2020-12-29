@@ -9,8 +9,6 @@
 #As of now, pyttsx3 does not work in Python 3.8. It has been successfully tested in Python 3.7.9, though.
 
 #Future challenges:
-#implement a true audio stream (i.e. getting rid of saving the recording first and then post-process it)
-#implement AIML 2.0 instead of 1.0
 #post-process conversational elements
 
 import aiml
@@ -20,14 +18,14 @@ import numpy as np
 import pyaudio #Audio processing library
 import time #for (optional) timing
 import pyttsx3 #Library for TTS
-from scipy.io import wavfile
+from scipy.io import wavfile #a scipy function used to analyze whether a given audio snippet contains an actual audio input
 
 
-#initialize two empty lists for keeping track of messages and responses
+#--- FOR FUTURE USE --- Initialize two empty lists for keeping track of messages and responses
 response_list = []
 message_list = []
 
-#Since DeepSpeech audio recording streaming doesn't currently work, below is a naive 'fake audio streamer'.
+#Open a pyaudio Recording Stream
 #The function records an audio snippet via PyAudio and saves it to 'output.wav' for further processing via
 #DeepSpeech and AIML
 def record_question():
@@ -35,7 +33,7 @@ def record_question():
     sample_format = pyaudio.paInt16  # 16 bits per sample
     channels = 1 #IMPORTANT: Don't play with this, channels has to be set to 1
     fs = 16000  # Record at 16000 samples per second, has to be compatible with DeepSpeech
-    seconds = 3 #length of recording, how can this be made more flexible?
+    seconds = 5 #hard-coded maximum duration of a user's statement/question. ***Can this be handled more flexibly?***
     filename = "output.wav"
 
     p = pyaudio.PyAudio()  # Create an interface to PortAudio
@@ -71,14 +69,17 @@ def record_question():
     wf.writeframes(b''.join(frames))
     wf.close()
 
-    #time.sleep(5) #optional, for better sync. But proven to be unnecessary at this point.
-
+#Recording Stream for hotword detection
 def record_wakeup():
     chunk = 1024  # Record in chunks of 1024 samples
     sample_format = pyaudio.paInt16  # 16 bits per sample
     channels = 1 #IMPORTANT: Don't play with this, channels has to be set to 1
     fs = 16000  # Record at 16000 samples per second, has to be compatible with DeepSpeech
-    seconds = 2 #length of recording, how can this be made more flexible?
+    #length of recording, just enough for the hotword utterance. If it was longer, there would be less 'input flexibility'
+    #(the user would frequently find that in his instant of talking the machine is not ready because her utterance happened
+    #in between the recording period. That's why it is important to limit the duration to just the time needed for an average
+    #speaker to utter the hotword)
+    seconds = 2 
     filename = "wakeup.wav"
 
     p = pyaudio.PyAudio()  # Create an interface to PortAudio
@@ -114,19 +115,11 @@ def record_wakeup():
     wf.writeframes(b''.join(frames))
     wf.close()
 
-    #time.sleep(5) #optional, for better sync. But proven to be unnecessary at this point.
-
-
-#do STT with DeepSpeech and the (very time-intensive) main trained model from Mozilla
+    
+#conduct STT with DeepSpeech TFlite (lightweight 45MB version of the big .pbmm model)
 def audio(fn):
-    model_filepath = 'deepspeech-0.9.3-models.pbmm'
+    model_filepath = 'deepspeech-0.9.3-models.tflite'
     model = deepspeech.Model(model_filepath)
-
-    scorer_filepath = 'deepspeech-0.9.3-models.scorer'
-    model.enableExternalScorer(scorer_filepath)
-    lm_alpha = 0.75
-    lm_beta = 1.85
-    model.setScorerAlphaBeta(lm_alpha, lm_beta)
 
     filename = fn
     w = wave.open(filename, 'r')
@@ -139,57 +132,39 @@ def audio(fn):
     text = model.stt(data16)
     return (text)
 
-#merge two .wav files
-def merge(file1, file2):
-    infiles = [file1, file2]
-    outfile = "final_output.wav"
-    data= []
-    for infile in infiles:
-        w = wave.open(infile, 'rb')
-        data.append( [w.getparams(), w.readframes(w.getnframes())] )
-        w.close()
-
-    output = wave.open(outfile, 'wb')
-    output.setparams(data[0][0])
-    output.writeframes(data[0][1])
-    output.writeframes(data[1][1])
-    output.close()
 
 # Create the kernel and learn AIML files
 kernel = aiml.Kernel()
 kernel.learn("std-startup.xml")
 kernel.respond("load aiml b")
 
-#We toggle between 'waiting for initiation' (i.e. hotword utterance) and 'talk mode'
-#In practice, the system should work more 'Alexa-like', i.e. 'always-on' and always listening for the hotword before the actual 
-#conversational content or question.
-
-
+#We toggle between 'waiting for initiation' (i.e. hotword utterance) and 'conversation mode'
+#The system is 'always-on', checking for the pre-defined hotword to be uttered, and once recognized, switches
+#to the conversation mode in which the system expects a statement/question, after it gave an initial response ('yes', or
+#'how can I help you' etc.)
 
 def initiation():
     engine = pyttsx3.init()
     wakeup_wait = True
-    while wakeup_wait:
-        record_wakeup() #wait for 'talk' hotword
+    while wakeup_wait: #infinite loop of 2-second-long recordings, waiting for hotword utterance. 
+        record_wakeup() 
         recorded = 'wakeup.wav'
         data = wavfile.read(recorded)
-        if data[1].max() > 2000:
+        #in order to increase speed and reduce unnecessary latency, we check if the user actually said anything by checking via scipy
+        #the signal strength. Only if the signal strength is high enough, we start inference, and only if the inference yields the
+        #hotword, we switch to the conversation mode
+        if data[1].max() > 2000: 
             message = audio('wakeup.wav')
             print (message)
             if message == "hello":
                 time.sleep(1)
-                engine.say('yes')
+                engine.say('yes') #response to hotword utterance. Only after outputting this response, the conversation mode can start
                 engine.runAndWait()
                 wakeup_wait = False
                 conversation() #if hotword is heard, switch to open conversation mode
 
-
-
-
 def conversation():
-    #talk = True
     record_question()
-    #merge("wakeup.wav", "output.wav")
     message = audio('output.wav')
     if message == "hello exit":
         exit()
@@ -200,7 +175,8 @@ def conversation():
         bot_response = kernel.respond(message)
         print (bot_response)
     elif message == "":
-        initiation()
+        pass
+        initiation() #if nothing is being said, we switch back to waiting for hotword (aka initiation mode)
     else:
         bot_response = kernel.respond(message)
         #message_list.append(message)
@@ -211,6 +187,6 @@ def conversation():
         engine = pyttsx3.init() #output the bot's reponse via pyttsx3 (TTS)
         engine.say(bot_response)
         engine.runAndWait()
-        initiation()
+        initiation() #switch back to initiation mode once the system's answer has been output
     
 initiation()
