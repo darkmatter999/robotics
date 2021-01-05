@@ -1,6 +1,5 @@
-green
-blue
-red
-orange
-purple
+black
+Line2
 yellow
+magenta
+green
