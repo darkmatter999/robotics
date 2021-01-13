@@ -106,6 +106,14 @@ history = model.fit(train_IDG, steps_per_epoch=8, epochs=50, verbose=1, validati
 algorithm_running_time = (timeit.default_timer() - start_time) / 60
 print("The time taken for model fitting is :", algorithm_running_time, "minutes")
 
+#In order to save a model for future use (offline inference etc.) we can use either TF itself (tf.SavedModel) or Keras via tf. 'model.save' below is the Keras version.
+
+#horse_or_human = "exp_saved_model_horse_human2"
+#tf.saved_model.save(model, horse_or_human)
+
+model.save("saved_horse_human3")
+
+
 #predict some new examples
 def predict_image_batch(folder_path):
     img_list = get_imagelist(folder_path)
@@ -118,7 +126,8 @@ def predict_image_batch(folder_path):
 
         images = np.vstack([x])
         classes = model.predict(images, batch_size=10)
-        #print(classes)
+        print(classes)
+
         if classes[0]>0.5:
             print(path + " is a human")
             if path[33:35] == 'hu':
