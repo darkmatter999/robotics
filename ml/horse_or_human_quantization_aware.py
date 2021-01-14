@@ -12,6 +12,11 @@
 # 512 images in total 
 # Naming: ho-n
 
+#HERE, QUANTIZATION-AWARE TRAINING ("fake" quantization as part of the training process) IS IMPLEMENTED
+
+#Further study in this area is recommended, since a quick go at an implementation (see below) has yielded a ~ 3.5x bigger model size (774 KB) than 
+#without q-aware training (215 KB)
+
 import os
 #import PIL
 #from PIL import Image
@@ -21,7 +26,11 @@ import matplotlib.pyplot as plt
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.regularizers import l2
+import tensorflow_model_optimization as tfmot #import the model optimizer for quantization-aware training
 import timeit
+
+#pre-instantiate q-aware model
+quantize_model = tfmot.quantization.keras.quantize_model
 
 #function creating a list of multiple file paths for images located in one local directory
 
@@ -68,12 +77,17 @@ model = tf.keras.Sequential([
     #tf.keras.layers.Dense(64, activation='relu'),
     #tf.keras.layers.Dense(32, activation='relu'),
     # in this pet problem, the output is either 0 or 1, hence binary
-    tf.keras.layers.Dense(1, activation='sigmoid')
+    tf.keras.layers.Dense(2, activation='softmax')
 ])
 
-model.summary()
+#instantiate the quantization-aware model
+q_aware_model = quantize_model(model)
+
+q_aware_model.summary()
 lr = 0.0007
-model.compile(optimizer=tf.keras.optimizers.RMSprop(learning_rate=lr),
+
+#the compiling process is done with the above instantiated q-aware model
+q_aware_model.compile(optimizer=tf.keras.optimizers.RMSprop(learning_rate=lr),
               loss='binary_crossentropy',
               metrics=['accuracy'])
 
@@ -92,16 +106,16 @@ train_dataset_IDG = ImageDataGenerator(rescale=1/255,
 val_dataset_IDG = ImageDataGenerator(rescale=1/255)
 
 #load training and validation data
-train_IDG = train_dataset_IDG.flow_from_directory('img/horse_or_human_2/horse_or_human_2_train', target_size=(120, 120), batch_size=16, class_mode='binary')
+train_IDG = train_dataset_IDG.flow_from_directory('img/horse_or_human_2/horse_or_human_2_train', target_size=(120, 120), batch_size=16, class_mode='categorical')
 #train_IDG = train_dataset_IDG.flow_from_directory('img/horse_or_human_reduced/horse_or_human_reduced_train', target_size=(120, 120), batch_size=64, class_mode='binary')
-val_IDG = val_dataset_IDG.flow_from_directory('img/horse_or_human_2/horse_or_human_2_val', target_size=(120, 120), batch_size=4, class_mode='binary')
+val_IDG = val_dataset_IDG.flow_from_directory('img/horse_or_human_2/horse_or_human_2_val', target_size=(120, 120), batch_size=4, class_mode='categorical')
 #val_IDG = val_dataset_IDG.flow_from_directory('img/horse_or_human_reduced/horse_or_human_reduced_val', target_size=(120, 120), batch_size=8, class_mode='binary')
 
 #implement timer (set start time) to time the model fitting
 start_time = timeit.default_timer()
 
 #fit the model
-history = model.fit(train_IDG, steps_per_epoch=16, epochs=100, verbose=1, validation_data = val_IDG, validation_steps=16)
+history = q_aware_model.fit(train_IDG, steps_per_epoch=8, epochs=50, verbose=1, validation_data = val_IDG, validation_steps=8)
 
 algorithm_running_time = (timeit.default_timer() - start_time) / 60
 print("The time taken for model fitting is :", algorithm_running_time, "minutes")
@@ -111,7 +125,7 @@ print("The time taken for model fitting is :", algorithm_running_time, "minutes"
 #horse_or_human = "exp_saved_model_horse_human2"
 #tf.saved_model.save(model, horse_or_human)
 
-model.save("saved_horse_human3")
+q_aware_model.save("saved_horse_human_with_q_aware_training")
 
 
 #predict some new examples
@@ -125,10 +139,10 @@ def predict_image_batch(folder_path):
         x = np.expand_dims(x, axis=0)
 
         images = np.vstack([x])
-        classes = model.predict(images, batch_size=10)
+        classes = q_aware_model.predict(images, batch_size=10)
         print(classes)
 
-        if classes[0]>0.5:
+        if classes[0][0]>0.5:
             print(path + " is a human")
             if path[33:35] == 'hu':
                 correct = correct + 1
