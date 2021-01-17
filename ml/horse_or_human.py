@@ -111,7 +111,7 @@ print("The time taken for model fitting is :", algorithm_running_time, "minutes"
 #horse_or_human = "exp_saved_model_horse_human2"
 #tf.saved_model.save(model, horse_or_human)
 
-model.save("saved_horse_human3")
+model.save("saved_horse_human4")
 
 
 #predict some new examples

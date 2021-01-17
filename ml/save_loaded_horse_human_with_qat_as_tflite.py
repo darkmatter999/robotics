@@ -22,7 +22,7 @@ def get_imagelist(path):
 #saved_model = keras.models.load_model('saved_horse_human3')
 
 #convert the saved model in .tflite format and reduce size (here from 215 KB to 149 KB) through quantization and pruning.
-converter = tf.lite.TFLiteConverter.from_saved_model("saved_horse_human_tiny") 
+converter = tf.lite.TFLiteConverter.from_saved_model("saved_horse_human_with_q_aware_training") 
 #***test further optimizations in .tflite models***
 #the default optimizer reduces the model a further > 100 KB to only 45.7 KB
 converter.optimizations = [tf.lite.Optimize.DEFAULT]
@@ -37,7 +37,7 @@ converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
 tflite_model = converter.convert()
 
 #save the converted .tflite model
-with open('model_tiny.tflite', 'wb') as f:
+with open('model_qat.tflite', 'wb') as f:
     f.write(tflite_model)
 
 #in this way, the model is already instantiated and can thus be called without further processing
