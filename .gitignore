@@ -1,6 +1,6 @@
 bot_test/venv
 *.pbmm
 *.scorer
-*.tflite
+deepspeech-0.9.3-models.tflite
 *.h5
 
