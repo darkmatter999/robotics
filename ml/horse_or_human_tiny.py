@@ -129,7 +129,7 @@ val_IDG = val_dataset_IDG.flow_from_directory('img/horse_or_human_2/horse_or_hum
 start_time = timeit.default_timer()
 
 #fit the model
-history = model.fit(train_IDG, steps_per_epoch=16, epochs=100, verbose=1, validation_data = val_IDG, validation_steps=16)
+history = model.fit(train_IDG, steps_per_epoch=16, epochs=3, verbose=1, validation_data = val_IDG, validation_steps=16)
 
 algorithm_running_time = (timeit.default_timer() - start_time) / 60
 print("The time taken for model fitting is :", algorithm_running_time, "minutes")
@@ -139,7 +139,7 @@ print("The time taken for model fitting is :", algorithm_running_time, "minutes"
 #horse_or_human = "saved_horse_human_tiny_saved_with_tf_savedmodel"
 #tf.saved_model.save(model, horse_or_human)
 
-model.save("saved_horse_human_tiny")
+#model.save("saved_horse_human_tiny")
 
 
 #predict some new examples
