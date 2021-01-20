@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 #Horse-human inference examples
 #first inference example (a human, Idriss Elba)
-human_exp_img = image.load_img("maddinschneider.jpg", target_size=(96, 96))
+human_exp_img = image.load_img("elba.jpg", target_size=(96, 96))
 human_exp = image.img_to_array(human_exp_img)
 human_exp = np.expand_dims(human_exp, axis=0)
 
@@ -69,3 +69,4 @@ output_data = interpreter.get_tensor(output_details[0]['index'])
 print(output_data)
 
 #plt.show()
+
